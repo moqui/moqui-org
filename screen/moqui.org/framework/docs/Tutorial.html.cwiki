@@ -1,0 +1,401 @@
+
+h1. Moqui Framework Tutorial
+
+This tutorial is a step-by-step guide to creating and running your own Moqui component with a user interface, logic, and database interaction.
+
+{toc}
+
+h2. Overview
+
+*Part 1*: To get started you'll be creating your own component and a simple "Hello world!" screen.
+
+*Part 2*: Continuing from there you'll define your own entity (database table) and add forms to your screen to find and create records for that entity.
+
+*Part 3*: To finish off the fun you will create some custom logic instead of using the default CrUD logic performed by the framework based on the entity definition.
+
+The running approach used in this document is a simple one using the embedded servlet container. For more complete coverage of running and deployment options, and of the general directory structure of Moqui Framework, please read the [Run and Deploy|http://www.moqui.org/framework/docs/RunDeploy.html] document.
+
+The tutorial code is available here: [http://www.moqui.org/tutorial.zip]
+
+h2. Part 1
+
+h3. Download Moqui Framework
+
+If you haven't already downloaded Moqui Framework, do that now.
+
+Run Moqui using the [Running and Deployment Instructions|http://www.moqui.org/framework/docs/RunDeploy.html].
+
+In your browser go to {{http://localhost:8080/}}, log in as John Doe, and look around a bit.
+
+Now quit (<ctrl>-c in the command line) and you're ready to go...
+
+h3. Create a Component
+
+Moqui follows the "convention over code" principle for components, so all you really have to do to create a Moqui component is create a directory:
+
+{{$ cd runtime/component}}
+{{$ mkdir tutorial}}
+
+Now go into the directory and create some of the standard directories that you'll use later in this tutorial:
+
+{{$ cd tutorial}}
+{{$ mkdir data}}
+{{$ mkdir entity}}
+{{$ mkdir screen}}
+{{$ mkdir script}}
+{{$ mkdir service}}
+
+With you component in place just start up Moqui (with {{$ ant run}} or the like).
+
+h3. Add a Screen
+
+Using your favorite IDE or text editor add a screen XML file in:
+
+{{runtime/component/tutorial/screen/tutorial.xml}}
+
+For now let this be a super simple screen with just a "Hello world!" label in it. The contents should look something like:
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<screen require-authentication="false">
+    <widgets>
+        <label type="h1" text="Hello world!"/>
+    </widgets>
+</screen>
+{code}
+
+h3. Mount as a Subscreen
+
+To make your screen available it needs to be added as a subscreen to a screen that is already under the root screen somewhere. In Moqui screens the URL path to the screen and the menu structure are both driven by the subscreen hierarchy, so this will setup the URL for the screen and add a menu tab for it.
+
+For the purposes of this tutorial we'll use the existing root screen and header/footer/etc that are in the included runtime directory. This runtime directory has a {{webroot}} component with the root screen at:
+
+{{runtime/component/webroot/screen/webroot.xml}}
+
+On a side note, the root screen is specified in the Moqui Conf XML file using the {{webapp-list.webapp.root-screen}} element, and you can have multiple elements to have different root screens for different host names.
+
+To make the subscreen hierarchy more flexible this root screen only has a basic HTML head and body, with no header and footer content, so let's put our screen under the "apps" screen which adds a header menu and will give our screen some context. Modify the {{apps}} screen by changing:
+
+{{runtime/component/webroot/screen/webroot/apps.xml}}
+
+Add a {{subscreens-item}} element under the {{subscreens}} element in the *apps.xml* file like:
+
+{code:brush: xml;}
+        <subscreens-item name="tutorial" menu-title="Tutorial"
+                         location="component://tutorial/screen/tutorial.xml"/>
+{code}
+
+The {{name}} attribute specifies the value for the path in the URL to the screen, so your screen is now available in your browser at:
+
+{{http://localhost:8080/apps/tutorial}}
+
+If you don't want to modify an existing screen file and still want to mount your screen as a subscreen of another you can do so with a record in the database that looks like this:
+
+{code:brush: xml;}
+    <SubscreensItem screenLocation="component://webroot/screen/webroot/apps.xml"
+                    subscreenName="tutorial" userGroupId="ALL_USERS"
+                    subscreenLocation="component://tutorial/screen/tutorial.xml"
+                    menuTitle="Tutorial" menuIndex="1" menuInclude="Y"/>
+{code}
+
+h3. Try Included Content
+
+Instead of using the label element we can get the HTML from a file that is "under" the screen.
+
+First create a simple HTML file located at:
+
+{{runtime/component/tutorial/screen/tutorial/hello.html}}
+
+The HTML file can contain any HTML, and since this will be included in a screen whose parent screens take care of header/footer/etc we can keep it very simple:
+
+{code:brush: xml;}
+<h1>Hello world! (from hello.html file)</h1>
+{code}
+
+Now just explicitly include the HTML file in the {{tutorial.xml}} screen definition using the {{render-mode.text}} element:
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<screen require-authentication="false">
+    <widgets>
+        <label type="h1" text="Hello world!"/>
+        <render-mode>
+            <text type="html" location="component://tutorial/screen/tutorial/hello.html"/>
+        </render-mode>
+    </widgets>
+</screen>
+{code}
+
+So what is this {{render-mode}} thingy? Moqui XML Screens are meant to platform agnostic and may be rendered in various environments. Because of this we don't want anything in the screen that is specific to a certain mode of rendering the screen without making it clear that it is. Under the {{render-mode}} element you can have various sub-elements for different render modes, even for different text modes such as HTML, XML, XSL-FO, CSV, and so on so that a single screen definition can be rendered in different modes and produce output as needed for each mode.
+
+The screen is available at the same URL, but now includes the content from the HTML file instead of having it inline as a label in the screen definition.
+
+h3. Try Sub-Content
+
+Another way to show the contents fo the {{hello.html}} file is to treat it as screen sub-content.
+
+To do this the {{hello.html}} file must by in a sub-directory with the same name as the screen, ie in a {{tutorial}} directory as a sibling of the {{tutorial.xml}} file.
+
+Now all we have to do is:
+
+# tell the tutorial.xml screen to include child content by setting the {{screen.@include-child-content}} attribute to {{true}}
+# tell the screen where to include subscreens and child content by adding a widgets.subscreens-active element
+# specify the default subscreens item as the hello.html sub-content with the subscreens.default-item attribute
+
+With those done your screen XML file should look like:
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<screen require-authentication="false" include-child-content="true">
+    <subscreens default-item="hello.html"/>
+    <widgets>
+        <label type="h1" text="Hello world!"/>
+        <subscreens-active/>
+    </widgets>
+</screen>
+{code}
+
+To see the content go to a URL that tells Moqui that you want the {{hello.html}} file that is under the {{tutorial}} screen:
+
+{{http://localhost:8080/apps/tutorial/hello.html}}
+
+With the default subscreens item specified you can also just go to the tutorial screen's URL:
+
+{{http://localhost:8080/apps/tutorial}}
+
+
+h2. Part 2
+
+h3. My First Entity
+
+An entity is a basic tabular data structure, and usually just a table in a database. An entity value is equivalent to a row in the database. Moqui does not do object-relational mapping, so all we have to do is define an entity, and then start writing code using the Entity Facade (or other higher level tools) to use it.
+
+To create a simple entity called "Tutorial" with fields "tutorialId" and "description" create an entity XML file at:
+
+{{runtime/component/tutorial/entity/TutorialEntities.xml}}
+
+That contains:
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+    <entity entity-name="Tutorial" package-name="tutorial">
+        <field name="tutorialId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+</entities>
+{code}
+
+If you're running Moqui in dev mode the entity definition cache clears automatically so you don't have to restart, and for production mode or if you don't want to wait (since Moqui does start very fast) you can just stop and start the JVM.
+
+How do you create the table? Unless you turn the feature off (in the Moqui Conf XML file) the Entity Facade will create the table (it it doesn't already exist) the first time the entity is used.
+
+h3. Add Some Data
+
+The Entity Facade has functionality to load data from, and write data to, XML files that basically elements that match entity names and attributes that map field names.
+
+We'll create a UI to enter data later on, and you can use the Auto Screen or Entity Data UI in the Tools application to work with records in your new entity. Data files are useful for seed data that code depends on, data for testing, and data to demonstrate how a data model should be used. So, let's try it.
+
+Create an entity facade XML file at:
+
+{{runtime/component/tutorial/data/TutorialData.xml}}
+
+That contains:
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="seed">
+    <tutorial.Tutorial tutorialId="TestOne" description="Test one description."/>
+    <tutorial.Tutorial tutorialId="TestTwo" description="Test two description."/>
+</entity-facade-xml>
+{code}
+
+To load this just run {{$ ant load}} or one of the other load variations described in the [Run and Deploy|http://www.moqui.org/framework/docs/RunDeploy.html] document.
+
+h3. Automatic Find Form
+
+Add the XML screen definition below as a subscreen for the {{tutorial}} screen by putting it in the file:
+
+{{runtime/component/tutorial/screen/tutorial/FindTutorial.xml}}
+
+{code:brush: xml;}
+<?xml version="1.0" encoding="UTF-8"?>
+<screen require-authentication="anonymous-all">
+
+    <transition name="findTutorial"><default-response url="."/></transition>
+
+    <actions>
+        <entity-find entity-name="tutorial.Tutorial" list="tutorialList">
+            <search-form-inputs/></entity-find>
+    </actions>
+
+    <widgets>
+        <form-list name="ListTutorials" list="tutorialList" transition="findTutorial">
+            <auto-fields-entity entity-name="tutorial.Tutorial" field-type="find-display"/>
+        </form-list>
+    </widgets>
+</screen>
+{code}
+
+This screen has a few key parts:
+
+* *{{transition}}* Think of links between screens as an ordered graph where each screen is a node and the transitions defined in each screen are how you go from that screen to another (or back to the same), and as part of that transition possibly run actions or a service.
+** A single {{transition}} can have multiple responses with conditions and for errors resulting in transition to various screens as needed by your UI design.
+** This particular {{transition}} very simply just refers back to the current screen.
+* *{{actions.entity-find}}* There is just one action run when this screen is rendered: an {{entity-find}}.
+** Normally with an {{entity-find}} element (or in the Java API an EntityFind object) you would specify conditions, fields to order by, and other details about the find to run.
+** In this case we are doing a find on an entity using standard parameters from an XML Form, so we can use the {{search-form-inputs}} sub-element to handle these automatically.
+** To get an idea of what the parameters should be like just view the HTML source in your browser that is generated by the XML Form.
+* *{{widgets.form-list}}* This is the actual form definition, specifically for a "list" form for multiple records/rows (as opposed to a "single" form).
+** The {{name}} here can be anything as long as it is unique within the XML Screen.
+** Note that the {{list}} refers to the result of the {{entity-find}} in the {{actions}} block, and the {{transition}} attribute refers to the {{transition}} defined at the top of the screen.
+** Since the goal was to have a form automatically defined based on an entity we use the {{auto-fields-entity}} element with the name of our Tutorial entity, and *find-display* option for the {{field-type}} attribute which creates find fields in the header and display fields for each record in the table body.
+
+To view this screen use this URL:
+
+{{http://localhost:8080/apps/tutorial/FindTutorial}}
+
+
+h3. An Explicit Field
+
+Instead of the default for the description field, what if you wanted to specify how it should look at what type of field it should be?
+
+To do this just add a {{field}} element inside the {{form-list}} element, and just after the {{auto-fields-entity}} element, like this:
+
+{code:brush: xml;}
+<form-list name="ListTutorials" list="tutorialList" transition="findTutorial">
+    <auto-fields-entity entity-name="tutorial.Tutorial" field-type="display"/>
+    <field name="description">
+        <header-field show-order-by="true"><text-find hide-options="true"/></header-field>
+        <default-field><display/></default-field>
+    </field>
+</form-list>
+{code}
+
+Because the field {{name}} attribute is the same as a field already created by the {{auto-fields-entity}} element it will override that field. If the {{name}} was different an additional field would be created. The result of this is basically the same as what was automatically generated using the {{auto-fields-entity}} element, and this is how you would do it explicitly.
+
+h3. Add a Create Form
+
+Let's add a button that will pop up a Create Tutorial form, and a transition to process the input.
+
+First add the transition to the {{FindTutorial.xml}} screen you created before, right next to the {{findTutorial}} transition:
+
+{code:brush: xml;}
+<transition name="createTutorial">
+    <service-call name="create#tutorial.Tutorial"/>
+    <default-response url="."/>
+</transition>
+{code}
+
+This transition just calls the {{create#tutorial.Tutorial}} service, and then goes back to the current screen.
+
+Where did the {{create#tutorial.Tutorial}} service come from? We haven't defined anything like that yet. The Moqui Service Facade supports a special kind of service for entity CrUD operations that don't need to be defined, let alone implemented. This service name consists of two parts, a verb and a noun, separated by a hash (#). As long as the verb is create, update, store, or delete and the noun is a valid entity name the Service Facade will treat it as an implicit entity-auto service and do the desired operation. It does so based on the entity definition and the parameters passed to the service call. For example, with the create verb and an entity with a single primary key field if you pass in a value for that field it will use it, otherwise it will automatically sequence a value using the entity name as the sequence key.
+
+Next let's add the create form, in a hidden container that will expand when a button is clicked. Put this inside the {{widget}} element, just above the {{form-list}} element in the original {{FindTutorial}} screen you created before so that it appears above the list form in the screen:
+
+{code:brush: xml;}
+<container-dialog id="CreateTutorialDialog" button-text="Create Tutorial">
+    <form-single name="CreateTutorial" transition="createTutorial">
+        <auto-fields-entity entity-name="tutorial.Tutorial" field-type="edit"/>
+        <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+    </form-single>
+</container-dialog>
+{code}
+
+The form definition refers to the {{transition}} you just added to the screen, and uses the {{auto-fields-entity}} element with *edit* for the {{field-type}} to generate edit fields. The last little detail is to declare a button to submit the form, and it's ready to go. Try it out and see the records appear in the list form that was part of the original screen.
+
+
+
+h2. Part 3
+
+h3. Custom Create Service
+
+The {{createTutorial}} transition from our screen above used the implicit entity-auto service {{create#Tutorial}}. Let's see what it would look like to define and implement a service manually.
+
+First lets define a service and use the automatic entity CrUD implementation:
+
+{{runtime/component/tutorial/service/tutorial/TutorialServices.xml}}
+
+{code:brush: xml;}
+<services>
+    <service verb="create" noun="Tutorial" type="entity-auto">
+        <in-parameters>
+            <auto-parameters include="all"/>
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="pk" required="true"/>
+        </out-parameters>
+    </service>
+</services>
+{code}
+
+This will allow all fields of the Tutorial entity to be passed in, and will always return the PK field (tutorialId). Note that with the {{auto-parameters}} element we are defining the service based on the entity, and if we added fields to the entity they would be automatically represented in the service.
+
+Now change that service definition to add an inline implementation as well. Notice that the {{service.@type}} attribute has changed, and the {{actions}} element has been added.
+
+{code:brush: xml;}
+<service verb="create" noun="Tutorial" type="inline">
+    <in-parameters>
+        <auto-parameters include="all"/>
+    </in-parameters>
+    <out-parameters>
+        <auto-parameters include="pk" required="true"/>
+    </out-parameters>
+    <actions>
+        <entity-make-value entity-name="tutorial.Tutorial" value-field="tutorial"/>
+        <entity-set value-field="tutorial" include="all"/>
+        <if condition="!tutorial.tutorialId">
+            <entity-sequenced-id-primary value-field="tutorial"/>
+        </if>
+        <entity-create value-field="tutorial"/>
+    </actions>
+</service>
+{code}
+
+Now to call the service instead of the implicit entity-auto one just change the {{transition}} to refer to this service:
+
+{code:brush: xml;}
+<transition name="createTutorial">
+    <service-call name="tutorial.TutorialServices.create#Tutorial"/>
+    <default-response url="."/>
+</transition>
+{code}
+
+Note that the service name for a defined service like this is like a fully qualified Java class name. It has a "package", in this case "tutorial" which is the directory (possibly multiple directories separated by dots) under the component/service directory. Then there is a dot and the equivalent of the class name, in this case "TutorialServices" which is the name of the XML file the service is in, but without the .xml extension. After that is another dot, and then the service name with the verb and noun optionally separated by a hash (#).
+
+h3. Groovy Service
+
+What if you want to implement the service in Groovy (or some other supported scripting language) instead of the inline XML Actions? In that case the service definition would look like this:
+
+{code:brush: xml;}
+<service verb="create" noun="Tutorial" type="script"
+        location="component://tutorial/script/tutorial/createTutorial.groovy">
+    <in-parameters>
+        <auto-parameters include="all"/>
+    </in-parameters>
+    <out-parameters>
+        <auto-parameters include="pk" required="true"/>
+    </out-parameters>
+</service>
+{code}
+
+Notice that the {{service.@type}} attribute has changed to *script*, and there is now a {{service.@location}} attribute which specifies the location of the script.
+
+Here is what the script would look like in that location:
+
+{code:brush: groovy;}
+def tutorial = ec.entity.makeValue("tutorial.Tutorial")
+tutorial.setFields(context, true, null, null)
+if (!tutorial.tutorialId) tutorial.setSequencedIdPrimary()
+tutorial.create()
+{code}
+
+When in Groovy, or other languages, you'll be using the Moqui Java API which is based on the ExecutionContext class which is available in the script with the variable name "ec". For more details on the API see the [API JavaDocs|http://www.moqui.org/javadoc/index.html] and specifically the doc for the [ExecutionContext|http://www.moqui.org/javadoc/org/moqui/context/ExecutionContext.html] class which has links to the other major API interface pages.
+
+
+
+h2. What's Next?
+
+Now that you have soiled your hands with the details of Moqui Framework, see the full documentation for the framework and a summary of Mantle Business Artifacts in the book [Making Apps with Moqui (PDF)|http://www.moqui.org/MakingAppsWithMoqui-1.0.pdf].
+
+You may also enjoy reading through the [Framework Features|http://www.moqui.org/framework/docs/features.html] document.

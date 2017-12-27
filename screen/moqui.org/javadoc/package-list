@@ -1,0 +1,17 @@
+org.moqui.context
+org.moqui.entity
+org.moqui.impl
+org.moqui.impl.context
+org.moqui.impl.context.reference
+org.moqui.impl.context.renderer
+org.moqui.impl.context.runner
+org.moqui.impl.entity
+org.moqui.impl.entity.condition
+org.moqui.impl.screen
+org.moqui.impl.service
+org.moqui.impl.service.runner
+org.moqui.impl.tools
+org.moqui.impl.util
+org.moqui.impl.webapp
+org.moqui.screen
+org.moqui.service

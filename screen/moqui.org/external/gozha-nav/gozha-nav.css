@@ -1,0 +1,249 @@
+/*------------------------------------------Bsgin Main settings---------------------------------------*/
+#navigation-box {
+	margin: 50px 0px 20px;
+	padding: 10px;
+	background-color:#212c43;
+	min-height:60px;
+/*	position:relative;*/
+}
+#navigation-toggle {
+	display: none;
+	float: right;
+	width: 50px; 
+	height: 50px; 
+	background-color: #7ccbfc; 
+	-webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,.5); 
+	-moz-box-shadow: inset 0 1px 1px rgba(255,255,255,.5); 
+	box-shadow: inset 0 1px 1px rgba(255,255,255,.5); 
+	border: solid 1px #7ccbfc; 
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0)); 
+	background-image: -moz-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0)); 
+	background-image: -o-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0)); 
+	background-image: -ms-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0)); 
+	background-image: linear-gradient(to top, rgba(0,0,0,.05), rgba(2,2,2,0));
+	-o-transition: all 500ms ease-in;
+	-webkit-transition: all 500ms ease-in;
+	-moz-transition: all 500ms ease-in;
+	transition: all 500ms ease-in;
+}
+
+#navigation-toggle.open-menu {
+	background-color: #f29090;
+	-webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,.5);
+	-moz-box-shadow: inset 0 1px 1px rgba(255,255,255,.5);
+	box-shadow: inset 0 1px 1px rgba(255,255,255,.5);
+	border: solid 1px #f29090;
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0));
+	background-image: -moz-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0));
+	background-image: -o-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0));
+	background-image: -ms-linear-gradient(bottom, rgba(0,0,0,.05), rgba(2,2,2,0));
+	background-image: linear-gradient(to top, rgba(0,0,0,.05), rgba(2,2,2,0));
+}
+
+
+.menu-icon {
+	display: block;
+	background: url(images/close-open-menu-icon.svg) 0 0 no-repeat;
+	width: 20px;
+	height: 22px;
+	margin: 15px auto 0;
+	-o-transition: all 500ms ease-in;
+	-webkit-transition: all 500ms ease-in;
+	-moz-transition: all 500ms ease-in;
+	transition: all 500ms ease-in;
+}
+
+.open-menu .menu-icon {
+	background: url(images/close-open-menu-icon.svg) 0 100% no-repeat;
+}
+
+
+
+
+
+ul#navigation {
+	float: right;
+	min-width:200px;
+}
+
+ul#navigation li {
+	position: relative;
+	padding: 4px;
+	border-bottom: 1px solid #1b253b;	
+}
+
+ul#navigation li:last-child {
+	border: none;
+}
+
+ul#navigation > li {
+	padding: 0;
+	float: left;
+	line-height: 36px;	
+	min-height: 36px;
+	border: none;
+	display: block;
+}
+
+ul#navigation a {
+	color: #fff;
+	text-decoration: none;
+	display: block;
+	padding: 7px 0 8px;
+}
+
+ul#navigation li:hover ul {
+	-webkit-animation: anime 500ms;
+	-moz-animation: anime 500ms; 
+	-o-animation: anime 500ms;
+	animation: anime 500ms;
+	
+}
+
+/*------------------------------------------End Main settings---------------------------------------*/
+/*------------------------------------------Bsgin Hover settings---------------------------------------*/
+
+@media (min-width: 768px) {
+ul#navigation > li {
+	padding: 0 15px;
+}
+	
+ul#navigation > li > ul {
+	display: none;
+	width: 150px;
+	position: absolute;
+	padding: 10px;
+	top: 35px;
+	left: 0;
+	background-color:#7ccbfc;
+	z-index:50;
+	-webkit-transform-origin: left top;
+	-moz-transform-origin: left top;
+	-ms-transform-origin: left top;
+	transform-origin: left top;
+	
+}
+
+ul#navigation li:hover ul {
+	display: block;
+}
+
+	@-moz-keyframes anime {
+	from {
+		opacity: 0;
+		-moz-transform: scaleY(0);
+		transform: scaleY(0);
+	}
+	to {
+		opacity: 1;
+		-moz-transform: scaleY(1);
+		transform: scaleY(1);
+	}
+	}
+	
+	@-webkit-keyframes anime {
+	from {
+		opacity: 0;
+		-webkit-transform: scaleY(0);
+		transform: scaleY(0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: scaleY(1);
+		transform: scaleY(1);
+	}
+	}
+	@keyframes anime {
+	from {
+		opacity: 0;
+		-webkit-transform: scaleY(0);
+		-moz-transform: scaleY(0);
+		transform: scaleY(0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: scaleY(1);
+		-moz-transform: scaleY(1);
+		transform: scaleY(1);
+	}
+	}
+}
+
+@media (max-width: 767px) {
+
+/*javascript use it*/
+ul#navigation.hidden-c{
+	display:none;
+}
+ul#navigation.showen-c{
+	display:block;
+}
+ul#navigation ul.showen-c{
+	display:block;
+}
+ul#navigation ul.hidden-c{
+	display:none;
+}
+/*end*/
+#navigation-toggle {
+	display: block;
+}
+
+ul#navigation {
+	display: none;
+	float: none;
+	padding: 0 15px 15px;
+	position: absolute;
+	top: 130px;
+	right: 11px;
+	background: #212c43;
+	background: rgba(33,44,67,.8);
+	z-index: 1000;
+}
+
+ul#navigation li{
+	border-bottom: 1px solid #1b253b;
+}
+
+ul#navigation > li {
+	float: none;
+	margin-top: 1px;
+}
+
+ul#navigation ul{
+	position:static;
+	background: #7ccbfc;
+	padding: 0 5px;
+	display: none;
+}
+
+.sub-nav-toggle {
+	display:block;
+	float:right;
+	width:36px;
+	height:48px;	
+	cursor:pointer;
+	background:#7ccbfc url(images/plus-minus-icon.png) center -25px no-repeat;
+	-o-transition: all 500ms ease-in;
+	-webkit-transition: all 500ms ease-in;
+	-moz-transition: all 500ms ease-in;
+	transition: all 500ms ease-in;
+	position: relative;
+	z-index: 50;
+}
+.sub-nav-toggle.plus {
+	background:#1b253b url(images/plus-minus-icon.png) center 18px no-repeat;
+}
+}
+/*------------------------------------------End Media---------------------------------------*/
+ a:focus,
+ a:active,
+ a:hover {
+	outline: none;
+}
+
+#navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}

@@ -1,0 +1,67 @@
+/* NOTE: changed style_blue.css @import "http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css"; */
+p { word-wrap: normal; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none; -o-hyphens: none; hyphens: none; }
+h3 { margin-top: 20px; }
+.basic_html p { margin-top: 0.4em; margin-bottom: 0.4em; }
+.basic_html li { margin-left: 20px; }
+.basic_html th, .basic_html td { padding: 2px 8px; border: #DDDDDF solid thin; }
+
+.presentation { height: 120px; background: #212c43; }
+.main-nav { height: 85px; background: #212c43; /* opacity: 0.95; filter: alpha(opacity=95); */ }
+.top-info { height: 35px; }
+
+.home-title-wrapper {
+  background: url(/images/home-photo.jpg) repeat-x center 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* use color instead of placeholder image for framework, mantle, etc */
+.services-title-wrapper { background-image: none; background-color: #437ac3; }
+.icon-circle--small { padding-top: 2px; }
+.circle-info .icon-circle--small { padding-left: 2px; }
+.list__item .icon-circle { padding-left: 2px; }
+
+.divider-circle-light { margin-top: 29px; }
+.divider-circle--light { margin-top: 29px; }
+
+/* better handle moqui logo image */
+.moqui-logo { margin-top: -5px; height: 40px; }
+@media (min-width: 768px) {
+  .main-nav.fixed-pos { top: 35px; }
+  .circle-info__title { font-size: 26px; }
+  .circle-button__title { font-size: 26px; }
+}
+
+.promobox { background-image: none; }
+.promobox-position-short { position: relative; z-index: 100; margin-top: -30px; margin-bottom: -10px; }
+
+.btn-wide { padding: 7px 20px 7px 20px; font-size: 24px; }
+.promobox .btn-wide { float: right; padding: 7px 20px 7px 20px; margin-top: 0; margin-left: 8px; }
+.promobox .promobox-img { float: right; margin-top: 8px; margin-left: 8px; }
+.promobox__text.promobox-wide { max-width: 100%; }
+
+.row.link-bar { text-align: center; font-size: 24px; }
+
+.section-title { margin-top: 20px; margin-bottom: 41px; font-size: 25px; line-height: 38px; }
+.section-title .text-highlight { font-size: 50px; }
+.section-title-simple { font-size: 30px; line-height: 30px; }
+.section-title--smaller { margin-top: 20px; margin-bottom: 20px; font-size: 20px; line-height: 26px; }
+.section-title--smaller .text-highlight { font-size: 35px; }
+
+.services .service__description { padding-top: 20px; font-size: 14px; line-height: 18px; }
+
+.services-description .service__text { font-size: 12px; line-height: 16px; }
+.services-description .services__item.small { min-height: 110px; padding: 15px 15px; margin: 12px 0 0;
+  background: #e3e8ec; border: 4px solid #f1f3f5; }
+.services-description .small .icon-circle { float: left; margin-top: 4px; margin-right: 16px; margin-bottom: 10px;
+  width: 50px; height: 50px; border: 2px solid #212c43; font-size: 24px; padding-top: 11px; }
+.services-description .small .service__title { margin-top: 0; margin-bottom: 4px; font-size: 18px; line-height: 18px; }
+
+.accordion-wide { max-width: 100%; }
+
+.logo_gallery div { display: flex; align-items: center; justify-content: center; height: 90px; text-align: center; }
+.logo_gallery img { max-height: 90px; max-width: 150px; }
+.logo_gallery a { font-size: 20px; }
+
+/* fix code:brush syntaxhighlighter line numbers */
+.syntaxhighlighter { white-space: normal; }

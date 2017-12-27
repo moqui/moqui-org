@@ -1,0 +1,108 @@
+/* defaults */
+* {
+margin: 0px; border: 0px; outline: 0px; padding: 0px;
+color: black; background: transparent; text-decoration: none;
+font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; font-weight: normal;
+vertical-align: bottom;
+}
+
+body { background: #FFFFFF; margin: 0px; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; font-size: 20px; }
+
+pre, pre code, pre div { font-size: .8em; }
+tt, pre, pre code { font-family: "Courier New", Courier, monospace; }
+
+ul { margin: 0 0 0 16px; }
+ol { margin: 0 0 0 16px; }
+ul li { font-size: .7em; }
+ol li { font-size: .7em; }
+li ul li { font-size: 1em; }
+li ol li { font-size: 1em; }
+li { margin: 0px 0px 0px 8px; padding: 0px 0px 0px 4px; }
+li a { color: #000099; }
+li a:hover { color: #0000CC; text-decoration: underline; background: transparent; }
+strong { font-weight: bold; font-size: 1.1em; }
+h5 { font-weight: bold; }
+
+#canvas { background: white; margin: 0 auto 0 auto; border-left: thin solid #CCCCCC; border-right: thin solid #CCCCCC;
+    padding: 10px; width: 900px; -moz-border-radius-bottomleft: 12px; -moz-border-radius-bottomright: 12px;
+    -webkit-border-bottom-left-radius: 12px; -webkit-border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+
+#head-menu { text-align: center; height: 30px; background-color: #554143; }
+#head-menu ul { display: block; }
+#head-menu ul li { display: inline-block; }
+#head-menu ul li a { margin: 0 0 0 0; padding: 0 8px 0 8px; display: block; color: whitesmoke;
+    border: 1px solid transparent; font-size: 1.1em; font-weight: bold; text-decoration: none; }
+#head-menu ul li a:hover { color: cadetblue; border: 1px solid #666666; }
+
+
+#header { background: white; height: 70px; vertical-align: middle; /* border-bottom: 1px dotted #DDDDEE; */ }
+
+#header .left { float: left; width: 580px; height: 70px; }
+#header .left H1 { margin: 0; font-size: 1.4em; display: inline; vertical-align: middle; }
+#header .left H1 A { color: black; text-decoration: none; font-weight: bold; vertical-align: middle; padding-bottom: 4px; }
+#header .left a img { height: 60px; vertical-align: middle; }
+
+#header .right { float: right; width: 300px; height: 40px; padding: 15px 0 15px 0; text-align: right; }
+#header .right img { border: 0; }
+
+#content { background: white; }
+
+/* ===== link-column Styles ===== */
+#link-column { float: left; width: 180px; background: white; /* border: #999999 dotted 1px; */ }
+#link-column h2 { margin: 0px 0px 0px 0px; padding: 8px 4px 2px 4px; background: white; font-size: 1em; font-weight: bold; }
+#link-column h3 { margin: 0px 0px 0px 0px; padding: 1px 4px 1px 6px; font-size: 0.8em; font-weight: bold; }
+#link-column h3 a { margin: 0px; padding: 0px; display: inline; color: #000033; text-decoration: underline; border: #EEEEEE none 0px; }
+#link-column h3 a:hover { color: #000099; text-decoration: underline; background: transparent; border: #000000 none 0px; }
+#link-column a { margin: 0px 0px 0px 0px; padding: 0px 4px 0px 10px; display: block; color: #000099;
+        border: 1px solid white; font-size: 0.7em; font-weight: bold; text-decoration: none; }
+#link-column a:hover { color: #000099; border: 1px solid #666666; }
+
+/* ===== detail-column, etc Styles ===== */
+#detail-column { margin-left: 188px; }
+#single-column { }
+
+#detail-column h1, #single-column h1 { margin: 4px 0 0 0; font-size: 1.2em; }
+#detail-column h2, #single-column h2 { margin: 4px 0px 2px 0px; font-size: 0.9em; font-weight: bold; }
+#detail-column h2 a, #single-column h2 a { display: inline; color: #000033; font-family: "Courier New", Courier, monospace;
+    text-decoration: none; padding-left: 4px; padding-right: 6px; position: relative; }
+#detail-column h2 a span, #single-column h2 a span { background-repeat: no-repeat; background-position: left bottom;
+    position: absolute; width: 100%; height: 100%; }
+#detail-column h2 a span.expanded, #single-column h2 a span.expanded { background-image: url('down.png'); background-size: 16px 16px; }
+#detail-column h2 a span.collapsed, #single-column h2 a span.collapsed { background-image: url('right.png'); background-size: 16px 16px; }
+#detail-column h2 a, #single-column h2 a { color: white; }
+#detail-column h2 a, #single-column h2 a { color: white; }
+
+#detail-column h3, #single-column h3 { margin: 8px 0px 2px 0px; font-size: 0.8em; font-weight: bold; }
+
+#detail-column p, #single-column p { margin: 6px 0px 6px 0px; font-size: 0.7em; }
+#detail-column p a, #detail-column ul li a, #single-column p a, #single-column ul li a, td a { padding-left: 2px;
+    padding-right: 2px; display: inline; color: #000033; text-decoration: underline; font-weight: bold; }
+#detail-column p a:hover, #detail-column ul li a:hover, #single-column p a:hover, #single-column ul li a:hover, td a:hover {
+    color: #0000CC; text-decoration: underline; background: transparent; }
+
+
+/* ===== Other Styles ===== */
+#opener .left { float: left; width: 128px; text-align: center; padding-top: 28px; }
+#opener .right { float: right; width: 128px; text-align: center; padding-top: 28px; }
+#world { width: 574px; margin-left: auto; margin-right: auto; }
+#world img { margin-top: -40px; }
+
+#topbiglinks-framework { width: 768px; margin-left: auto; margin-right: auto; }
+#topbiglinks-mantle { width: 640px; margin-left: auto; margin-right: auto; }
+#topbiglinks-framework .left, #topbiglinks-mantle .left { float: left; width: 128px; text-align: center; }
+#topbiglinks-framework .right, #topbiglinks-mantle .right { float: right; width: 128px; text-align: center; }
+
+#status, #intro, #model, #choose, #features, #ofbcompare { margin: 0px 0px 8px 0px; padding: 8px 8px 8px 8px;
+         background: transparent; } /* border: #EEEEEE dotted 1px; */
+
+#status_area, #intro_area, #model_area, #choose_area, #features_area, #ofbcompare_area { margin-left: 24px; }
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+/* required comment for clearfix to work in Opera \*/
+* html .clearfix { height:1%; }
+.clearfix { display:block; }
+
+
+th, td { font-size: 0.65em; border-bottom: 1px solid #DDDDDF; margin: 0px; padding: 0px 4px 0px 4px; }

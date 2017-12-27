@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="seed">
+    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot.xml"
+            subscreenName="m" menuInclude="N" makeDefault="Y" noSubPath="Y"
+            subscreenLocation="component://moqui-org/screen/moqui.org.xml"/>
+
+    <!-- authz/permission for ALL users -->
+    <moqui.security.ArtifactGroup artifactGroupId="MOQ_ORG" description="moqui.org app (via root screen)"/>
+    <moqui.security.ArtifactGroupMember artifactGroupId="MOQ_ORG" artifactName="component://moqui-org/screen/moqui.org.xml"
+            artifactTypeEnumId="AT_XML_SCREEN" inheritAuthz="Y"/>
+    <moqui.security.ArtifactAuthz artifactAuthzId="MOQ_ORG_ALL" userGroupId="ALL_USERS" artifactGroupId="MOQ_ORG"
+            authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+</entity-facade-xml>
