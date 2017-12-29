@@ -870,7 +870,7 @@
 					<key>Link</key>
 					<dict>
 						<key>url</key>
-						<string>http://www.moqui.org/framework/index.html</string>
+						<string>http://www.moqui.org/framework.html</string>
 					</dict>
 					<key>Shape</key>
 					<string>Circle</string>
@@ -1205,7 +1205,7 @@
 					<key>Link</key>
 					<dict>
 						<key>url</key>
-						<string>http://www.moqui.org/framework/index.html</string>
+						<string>http://www.moqui.org/framework.html</string>
 					</dict>
 					<key>Scaling</key>
 					<integer>1</integer>

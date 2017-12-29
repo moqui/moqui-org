@@ -106,3 +106,8 @@ h5 { font-weight: bold; }
 
 
 th, td { font-size: 0.65em; border-bottom: 1px solid #DDDDDF; margin: 0px; padding: 0px 4px 0px 4px; }
+
+/* wiki screen, including CodeMirror class */
+#wiki-page-area { width: 100%; overflow-x: scroll; overflow-y: visible; }
+#wiki-page-area th, #wiki-page-area td { padding: 2px 4px 2px 4px; border: thin solid lightgrey; }
+.CodeMirror, .CodeMirror-scroll { min-height: 600px; min-width: 800px; }
