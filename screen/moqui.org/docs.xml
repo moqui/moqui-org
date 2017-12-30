@@ -38,12 +38,12 @@ along with this software (see the LICENSE.md file). If not, see
         <if condition="wikiSpace != null">
             <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" in-map="context" out-map="context"/>
             <set field="versionName" from="ver ?: publishedVersionName ?: currentVersionName"/>
-
-            <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
-            <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
         </if>
         <entity-find entity-name="moqui.resource.wiki.WikiSpace" list="wikiSpaceList">
             <econdition field-name="restrictView" value="N" or-null="true"/></entity-find>
+
+        <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
+        <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
     </actions>
 
     <widgets><container style="container basic_html">
