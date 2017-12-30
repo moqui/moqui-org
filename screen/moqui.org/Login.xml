@@ -26,7 +26,12 @@ along with this software (see the LICENSE.md file). If not, see
     <transition name="createInitialAdminAccount"><service-call name="org.moqui.impl.UserServices.create#InitialAdminAccount"/>
         <default-response url="../Login"/><error-response url="."/></transition>
     <transition name="createAccount" require-session-token="false">
-        <service-call name="mantle.party.PartyServices.create#Account" in-map="context + [userGroupId:'HIVE_MIND_VIEW']"/>
+        <actions>
+            <service-call name="mantle.party.PartyServices.create#Account" out-map="context"
+                    in-map="context + [userGroupId:'HIVE_MIND_VIEW']"/>
+            <service-call name="create#moqui.security.UserGroupMember"
+                    in-map="[userGroupId:'HIVE_MIND_VIEW', userId:userId, fromDate:ec.user.nowTimestamp]"/>
+        </actions>
         <default-response type="screen-last"/><error-response url="."/>
     </transition>
 
