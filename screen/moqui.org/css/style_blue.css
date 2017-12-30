@@ -1,9 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
-@import "http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css";
-@import "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
 @import "../external/gozha-nav/gozha-nav.css";
 @import "../external/magnific-popup/magnific-popup.css";
-@import "../external/colorbox/colorbox.css";
 @import "../external/rs-plugin/css/settings.css";
 @import "../external/swiper/idangerous.swiper.css";
 @import "../external/bootstrap-select/bootstrap-select.css";
@@ -3992,7 +3989,6 @@ ul#navigation > li:hover:after {
   padding: 0 37px 0 15px;
   font-size: 13px;
   background: #e5e5da;
-  background: #fff;
   border: none;
 }
 .submit-button {
@@ -8677,7 +8673,7 @@ a.custom-tooltip:hover {
     top: 120px;
     right: 0;
     min-width: 230px;
-    background: rgba(33, 44, 67, 0.8);
+    background: rgba(33, 44, 67, 0.9);
   }
   ul#navigation a {
     padding: 7px 17px 8px;
@@ -8864,8 +8860,8 @@ a.custom-tooltip:hover {
   .sidebar {
     padding-left: 40px;
   }
-  .sidebar--thin{ 
-    padding-left: 80px; 
+  .sidebar--thin{
+    padding-left: 80px;
   }
   .page-title {
     float: left;

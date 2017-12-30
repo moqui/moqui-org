@@ -1,13 +1,19 @@
-/* NOTE: changed style_blue.css @import "http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css"; */
 p { word-wrap: normal; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none; -o-hyphens: none; hyphens: none; }
 h3 { margin-top: 20px; }
 .basic_html p { margin-top: 0.4em; margin-bottom: 0.4em; }
 .basic_html li { margin-left: 20px; }
 .basic_html th, .basic_html td { padding: 2px 8px; border: #DDDDDF solid thin; }
 
-.presentation { height: 120px; background: #212c43; }
-.main-nav { height: 85px; background: #212c43; /* opacity: 0.95; filter: alpha(opacity=95); */ }
+.presentation { height: 108px; background: #212c43; }
+.main-nav { height: 73px; background: #212c43; /* opacity: 0.95; filter: alpha(opacity=95); */ }
 .top-info { height: 35px; }
+.logo { padding-top: 16px; }
+.logo-img { margin-bottom: 20px; }
+ul#navigation > li > a { padding: 23px 15px 21px; }
+ul#navigation a:hover, ul#navigation .active-item > a { color: #5ba5eb; }
+
+@media (min-width: 768px) { ul#navigation > li:hover > ul { top: 70px; background: rgba(33, 44, 67, 0.9); } }
+#navigation-toggle { margin-top: 8px; }
 
 .home-title-wrapper {
   background: url(/images/home-photo.jpg) repeat-x center 0;
@@ -64,4 +70,17 @@ h3 { margin-top: 20px; }
 .logo_gallery a { font-size: 20px; }
 
 /* fix code:brush syntaxhighlighter line numbers */
-.syntaxhighlighter { white-space: normal; }
+.syntaxhighlighter { white-space: normal; background: white; }
+
+.Login .form-signin { display: block; width: 400px; padding: 10px; margin: 0 auto; border-radius: 3px; }
+.Login .form-signin input { width: 100%; height: auto; font-size: 1.2em; }
+.Login .form-signin input.top { margin-bottom: -1px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.Login .form-signin input.middle { margin-bottom: -1px; border-radius: 0; }
+.Login .form-signin input.bottom { border-top-left-radius: 0; border-top-right-radius: 0; margin-bottom: 10px; }
+
+/* wiki screen, including CodeMirror class */
+#wiki-page-area { width: 100%; overflow-x: scroll; overflow-y: visible; }
+#wiki-page-area th, #wiki-page-area td { padding: 2px 4px 2px 4px; border: thin solid lightgrey; }
+.CodeMirror, .CodeMirror-scroll { min-height: 600px; min-width: 800px; }
+pre { background: inherit; }
+

@@ -20,8 +20,8 @@ $(document).ready(function() {
 
 
 //Colorbox responsive
-$.colorbox.settings.maxWidth  = '95%';
-$.colorbox.settings.maxHeight = '95%';
+// $.colorbox.settings.maxWidth  = '95%';
+// $.colorbox.settings.maxHeight = '95%';
 
 //colorBox resize function
 var resizeTimer;

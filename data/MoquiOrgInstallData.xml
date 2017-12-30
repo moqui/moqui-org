@@ -4,7 +4,7 @@
     <moqui.resource.wiki.WikiSpace wikiSpaceId="framework" description="Moqui Framework" restrictView="N"
             rootPageLocation="dbresource://WikiSpace/framework.md"
             publicPageUrl="/docs/${wikiSpaceId}/${pagePath}?ver=${versionName}" publicAttachmentUrl="/docs/attachment/${wikiPageId}/${filename}"/>
-    <moqui.resource.wiki.WikiPage wikiPageId="framework" wikiSpaceId="framework" pagePath="" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="framework" wikiSpaceId="framework" pagePath="" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="framework" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="framework_md" parentResourceId="WIKI_SPACE_ROOT" filename="framework.md" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="framework_md" mimeType="text/plain" versionName="01" rootVersionName="01"
@@ -15,7 +15,7 @@
     <moqui.resource.wiki.WikiSpace wikiSpaceId="mantle" description="Mantle Business Artifacts" restrictView="N"
             rootPageLocation="dbresource://WikiSpace/mantle.md"
             publicPageUrl="/docs/${wikiSpaceId}/${pagePath}?ver=${versionName}" publicAttachmentUrl="/docs/attachment/${wikiPageId}/${filename}"/>
-    <moqui.resource.wiki.WikiPage wikiPageId="mantle" wikiSpaceId="mantle" pagePath="" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="mantle" wikiSpaceId="mantle" pagePath="" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="mantle" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="mantle_root" parentResourceId="WIKI_SPACE_ROOT" filename="mantle.md" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="mantle_root" mimeType="text/plain" versionName="01" rootVersionName="01"
@@ -25,7 +25,7 @@
     <moqui.resource.wiki.WikiSpace wikiSpaceId="apps" description="Moqui Applications" restrictView="N"
             rootPageLocation="dbresource://WikiSpace/apps.md"
             publicPageUrl="/docs/${wikiSpaceId}/${pagePath}?ver=${versionName}" publicAttachmentUrl="/docs/attachment/${wikiPageId}/${filename}"/>
-    <moqui.resource.wiki.WikiPage wikiPageId="apps" wikiSpaceId="apps" pagePath="" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="apps" wikiSpaceId="apps" pagePath="" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="apps" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="apps_root" parentResourceId="WIKI_SPACE_ROOT" filename="apps.md" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="apps_root" mimeType="text/plain" versionName="01" rootVersionName="01"

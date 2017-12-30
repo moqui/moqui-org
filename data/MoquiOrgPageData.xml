@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-facade-xml type="install">
-    <moqui.resource.wiki.WikiPage wikiPageId="RunDeploy" wikiSpaceId="framework" pagePath="Run and Deploy" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="RunDeploy" wikiSpaceId="framework" pagePath="Run and Deploy" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="RunDeploy" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="RunDeploy" parentResourceId="framework_dir" filename="Run and Deploy.cwiki" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="RunDeploy" mimeType="text/plain" versionName="01" rootVersionName="01"><fileData><![CDATA[
@@ -267,7 +267,7 @@ The main place to put your components is in the runtime/component directory. Whe
 Components with declared dependencies (in a component.xml file in the component directory) will be loaded after the component(s) they depend on.
     ]]></fileData><histories versionName="01" versionDate="1485028800000" isDiff="N"/></moqui.resource.DbResourceFile>
 
-    <moqui.resource.wiki.WikiPage wikiPageId="QuickTutorial" wikiSpaceId="framework" pagePath="Quick Tutorial" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="QuickTutorial" wikiSpaceId="framework" pagePath="Quick Tutorial" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="QuickTutorial" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="QuickTutorial" parentResourceId="framework_dir" filename="Quick Tutorial.cwiki" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="QuickTutorial" mimeType="text/plain" versionName="01" rootVersionName="01"><fileData><![CDATA[
@@ -673,7 +673,7 @@ Now that you have soiled your hands with the details of Moqui Framework, see the
 You may also enjoy reading through the [Framework Features|http://www.moqui.org/docs/framework/Framework+Features] document.
     ]]></fileData><histories versionName="01" versionDate="1485028800000" isDiff="N"/></moqui.resource.DbResourceFile>
 
-    <moqui.resource.wiki.WikiPage wikiPageId="FrameworkFeatures" wikiSpaceId="framework" pagePath="Framework Features" createdByUserId=""/>
+    <moqui.resource.wiki.WikiPage wikiPageId="FrameworkFeatures" wikiSpaceId="framework" pagePath="Framework Features" createdByUserId="" publishedVersionName="01"/>
     <moqui.resource.wiki.WikiPageHistory wikiPageId="FrameworkFeatures" historySeqId="01" userId="" changeDateTime="1485028800000"/>
     <moqui.resource.DbResource resourceId="FrameworkFeatures" parentResourceId="framework_dir" filename="Framework Features.cwiki" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="FrameworkFeatures" mimeType="text/plain" versionName="01" rootVersionName="01"><fileData><![CDATA[

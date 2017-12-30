@@ -15,96 +15,104 @@ along with this software (see the LICENSE.md file). If not, see
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
         allow-extra-path="true" default-menu-include="false" require-authentication="anonymous-view">
 
-    <transition name="downloadAttachment" read-only="true"><actions>
-        <service-call name="org.moqui.impl.WikiServices.get#WikiPageAttachment" in-map="context" out-map="context"/>
-        <script>ec.web.sendResourceResponse(attachmentReference.location)</script>
+    <transition name="attachment" read-only="true"><actions>
+        <set field="extraPathNameList" from="new ArrayList(sri.screenUrlInfo.extraPathNameList)"/>
+        <if condition="!extraPathNameList"><script>ec.web.response.sendError(404)</script></if>
+        <set field="filename" from="extraPathNameList.remove(extraPathNameList.size()-1)"/>
+        <service-call name="org.moqui.impl.WikiServices.get#WikiPageAttachment" out-map="context"
+                in-map="[wikiSpaceId:wikiSpaceId, pagePath:extraPathNameList?.join('/'), filename:filename]"/>
+        <script>ec.web.sendResourceResponse(attachmentReference.location, true)</script>
     </actions><default-response type="none"/></transition>
 
     <pre-actions>
         <set field="head_title" value="Moqui Framework Documentation"/>
-
-        <set field="extraPathNameList" from="sri.screenUrlInfo.extraPathNameList"/>
-        <if condition="extraPathNameList &amp;&amp; extraPathNameList[0] == 'apps'"><return/></if>
-        <!-- TODO: if not at least one path segment for the space show list of spaces -->
-        <!-- TODO: get published version -->
-        <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" in-map="context" out-map="context"/>
-
-        <!-- TODO: if pageReference == null || !pageReference?.exists then show not found message -->
+        <set field="menu_active" value="docs"/>
     </pre-actions>
     
     <actions>
-        <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
-        <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
-        <!-- this is only used for the WikiPageTree.ftl file, not needed otherwise: -->
-        <!-- <service-call name="org.moqui.impl.WikiServices.get#WikiSpacePages" in-map="context" out-map="context"/> -->
+        <set field="extraPathNameList" from="new ArrayList(sri.screenUrlInfo.extraPathNameList)"/>
+        <set field="wikiSpaceId" from="extraPathNameList ? extraPathNameList.get(0) : null"/>
+        <entity-find-one entity-name="moqui.resource.wiki.WikiSpace" value-field="wikiSpace"/>
+        <if condition="wikiSpace?.restrictView == 'Y'"><set field="wikiSpace" from="null"/></if>
+
+        <if condition="wikiSpace != null">
+            <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" in-map="context" out-map="context"/>
+            <set field="versionName" from="ver ?: publishedVersionName ?: currentVersionName"/>
+
+            <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
+            <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
+        </if>
+        <entity-find entity-name="moqui.resource.wiki.WikiSpace" list="wikiSpaceList">
+            <econdition field-name="restrictView" value="N" or-null="true"/></entity-find>
     </actions>
 
-    <widgets>
-        <container style="container basic_html"><container-row><row-col md="3">
-            <label text="Page Tree" type="h5"/>
-            <link text="${wikiSpace?.description?:'Space Root'}" url="${basePath}/${wikiSpaceId}" link-type="anchor" url-noparam="true"/>
-            <!-- using fancy expanding tree instead of flat list:
-            <container id="wiki-page-list">
-                <section-iterate name="PageList" list="allChildFileFlatList" entry="childFile"><widgets>
-                    <container><link text="${childFile.path ?: childFile.name}" url="${baseLinkUrl}/${childFile.path}" url-type="plain"/></container>
-                </widgets></section-iterate>
-            </container>
-            -->
-            <tree name="SpacePageTree" open-path="${pagePath}">
-                <parameter name="basePath"/>
-                <parameter name="wikiSpaceId"/>
-                <tree-node name="WikiPageNode">
-                    <actions>
-                        <script>
-                            // In this case the tree-sub-node.list is a List of ResourceReference
-                            // The fileName minus the extension is effectively the ID of a page, with the IDs of the
-                            //     parents separated by a forward slash for the full path ID just in case there is more
-                            //     than one page with that filename
-                            curFileName = nodeList_entry.getFileName()
-                            if (curFileName.contains(".")) curFileName = curFileName.substring(0, curFileName.lastIndexOf('.'))
-                        </script>
-                        <set field="newIdPath" value="${treeNodeId == '#' ? '' : treeNodeId + '/'}${curFileName}"/>
-                    </actions>
+    <widgets><container style="container basic_html">
+        <container-row><row-col md="3">
+            <!-- if not at least one path segment for the space show list of spaces -->
+            <label text="Wiki Spaces" type="h5"/>
+            <section-iterate name="WikiSpaceList" list="wikiSpaceList" entry="wikiSpace" condition="wikiSpaceList"><widgets>
+                <container><link text="${wikiSpace.description}" url="${basePath}/${wikiSpace.wikiSpaceId}" link-type="anchor"
+                        icon="glyphicon glyphicon-${wikiSpaceId == wikiSpace.wikiSpaceId ? 'chevron-right' : 'minus'}"
+                        style="${wikiSpaceId == wikiSpace.wikiSpaceId ? 'text-success' : ''}"/></container>
+            </widgets></section-iterate>
 
-                    <link text="${curFileName}" url="${basePath}/${wikiSpaceId}/${java.net.URLEncoder.encode(newIdPath)}"
-                            url-noparam="true" id="${newIdPath}"/>
+            <section name="MainViewSection" condition="wikiSpace != null"><widgets>
+                <label text="Page Tree" type="h5"/>
+                <link text="${wikiSpace?.description?:'Space Root'}" url="${basePath}/${wikiSpaceId}" link-type="anchor" url-noparam="true"/>
+                <tree name="SpacePageTree" open-path="${pagePath}">
+                    <parameter name="basePath"/>
+                    <parameter name="wikiSpaceId"/>
+                    <tree-node name="WikiPageNode">
+                        <actions>
+                            <script>
+                                // In this case the tree-sub-node.list is a List of ResourceReference
+                                // The fileName minus the extension is effectively the ID of a page, with the IDs of the
+                                //     parents separated by a forward slash for the full path ID just in case there is more
+                                //     than one page with that filename
+                                curFileName = nodeList_entry.getFileName()
+                                if (curFileName.contains(".")) curFileName = curFileName.substring(0, curFileName.lastIndexOf('.'))
+                            </script>
+                            <set field="newIdPath" value="${treeNodeId == '#' ? '' : treeNodeId + '/'}${curFileName}"/>
+                        </actions>
 
-                    <tree-sub-node node-name="WikiPageNode" list="childPageList"><actions>
-                        <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" out-map="curPageInfo"
-                                in-map="[wikiSpaceId:wikiSpaceId, pagePath:treeNodeId]"/>
-                        <set field="childPageList" from="curPageInfo?.pageReference.getChildren()"/>
+                        <link text="${curFileName}" url="${basePath}/${wikiSpaceId}/${java.net.URLEncoder.encode(newIdPath)}"
+                                url-noparam="true" id="${newIdPath}"/>
+
+                        <tree-sub-node node-name="WikiPageNode" list="childPageList"><actions>
+                            <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" out-map="curPageInfo"
+                                    in-map="[wikiSpaceId:wikiSpaceId, pagePath:treeNodeId]"/>
+                            <set field="childPageList" from="curPageInfo?.pageReference.getChildren()"/>
+                        </actions></tree-sub-node>
+                    </tree-node>
+                    <tree-sub-node node-name="WikiPageNode" list="topPageList"><actions>
+                        <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" out-map="rootPageInfo"
+                                in-map="[wikiSpaceId:wikiSpaceId]"/>
+                        <set field="topPageList" from="rootPageInfo.pageReference.getChildren()"/>
+                        <!-- <log level="warn" message="============ wikiSpaceId=${wikiSpaceId}; topPageList=${topPageList}"/> -->
                     </actions></tree-sub-node>
-                </tree-node>
-                <tree-sub-node node-name="WikiPageNode" list="topPageList"><actions>
-                    <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" out-map="rootPageInfo"
-                            in-map="[wikiSpaceId:wikiSpaceId]"/>
-                    <set field="topPageList" from="rootPageInfo.pageReference.getChildren()"/>
-                    <!-- <log level="warn" message="============ wikiSpaceId=${wikiSpaceId}; topPageList=${topPageList}"/> -->
-                </actions></tree-sub-node>
-            </tree>
-            <!-- removedin favor of tree above:
-            <render-mode><text type="html,vuet" location="component://HiveMind/template/screen/WikiPageTree.ftl" template="true"/></render-mode>
-            -->
-
+                </tree>
+            </widgets></section>
         </row-col><row-col md="9">
-
-            <!-- <container id="wiki-breadcrumbs">
-                <link text="${wikiSpace?.description?:'Space Root'}" url="${baseLinkUrl}" url-type="plain" link-type="anchor"/>
-                <section-iterate name="breadcrumbs" list="breadcrumbMapList" entry="breadcrumbMap"><widgets>
-                    <label text="/"/>
-                    <link text="${breadcrumbMap.pageName}" url="${baseLinkUrl}/${breadcrumbMap.pagePath}" url-type="plain" link-type="anchor"/>
-                </widgets></section-iterate>
-            </container> -->
-            <container id="wiki-page-area">
-                <section name="WikiPageInclude">
-                    <condition><expression>!wikiSpace?.decoratorScreenLocation</expression></condition>
-                    <actions><script>sri.baseLinkUrl(baseLinkUrl)</script></actions>
-                    <widgets><render-mode><text type="html,vuet" template="true"
-                            location="${pageLocation?:''}${versionName &amp;&amp; currentVersionName != versionName ? '#' + versionName : ''}"/></render-mode></widgets>
-                    <fail-widgets><include-screen location="${wikiSpace.decoratorScreenLocation}"/></fail-widgets>
-                </section>
-                <section name="ResetBaseLink"><actions><script>sri.baseLinkUrl(null)</script></actions><widgets/></section>
-            </container>
-        </row-col></container-row></container>
-    </widgets>
+            <section name="PageTextSection" condition="pageReference != null &amp;&amp; pageReference.exists &amp;&amp; publishedVersionName">
+                <widgets>
+                    <container id="wiki-page-area">
+                        <section name="WikiPageInclude">
+                            <condition><expression>!wikiSpace?.decoratorScreenLocation</expression></condition>
+                            <actions><script>sri.baseLinkUrl(baseLinkUrl)</script></actions>
+                            <!-- NOTE: only get current published version -->
+                            <!-- Cache of rendered page doesn't work with version specified, consider always showing most recent -->
+                            <widgets><render-mode><text type="html,vuet" template="true"
+                                    location="${pageReference.location}${versionName &amp;&amp; currentVersionName != versionName ? '#' + versionName : ''}"/></render-mode></widgets>
+                            <fail-widgets><include-screen location="${wikiSpace.decoratorScreenLocation}"/></fail-widgets>
+                        </section>
+                        <section name="ResetBaseLink"><actions><script>sri.baseLinkUrl(null)</script></actions><widgets/></section>
+                    </container>
+                </widgets>
+                <fail-widgets>
+                    <label text="Sorry, we couldn't find that page!" type="h2" style="text-center" condition="wikiSpace != null"/>
+                    <label text="Select a Wiki Space" type="h4" style="text-center" condition="wikiSpace == null"/>
+                </fail-widgets>
+            </section>
+        </row-col></container-row>
+    </container></widgets>
 </screen>
