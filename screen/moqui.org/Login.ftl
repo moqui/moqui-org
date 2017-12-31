@@ -19,7 +19,8 @@
 
 <div class="text-center">
     <h4>Login to access <span class="text-info">HiveMind PM</span> for Moqui</h4>
-    <p>An account is required to view issues (requests), projects, and tasks. Create a <a class="text-success" href="#new-account" data-toggle="tab">New Account</a> to get view only access immediately.</p>
+    <p>An account is required to view issues (requests), projects, and tasks. Create a <a class="text-success" href="#new-account" data-toggle="tab">New Account</a> to get access immediately.</p>
+    <p>Your account will initially have full access to the My Account app for requests, messages, etc and view-only access for the HiveMind PM app to view all requests, tasks, etc.</p>
 </div>
 <div class="tab-content">
     <div id="login" class="tab-pane active">
@@ -58,7 +59,7 @@
             <input type="text" name="firstName" value="${(ec.getWeb().getErrorParameters().get("firstName"))!""}" placeholder="First Name" class="form-control top required" required="required">
             <input type="text" name="lastName" value="${(ec.getWeb().getErrorParameters().get("lastName"))!""}" placeholder="Last Name" class="form-control middle required" required="required">
             <input type="email" name="emailAddress" value="${(ec.getWeb().getErrorParameters().get("emailAddress"))!""}" placeholder="Email" class="form-control middle email required" required="required">
-            <input type="text" name="username" value="${(ec.getWeb().getErrorParameters().get("username"))!""}" placeholder="Username (defaults to email)" class="form-control middle">
+            <input type="text" name="username" value="${(ec.getWeb().getErrorParameters().get("username"))!""}" placeholder="Username (please use GitHub ID)" class="form-control middle">
             <input type="password" class="form-control middle required" name="newPassword" placeholder="Password" required="required">
             <input type="password" class="form-control bottom required" name="newPasswordVerify" placeholder="Verify Password" required="required">
             <button class="btn btn-lg btn-success btn-block" type="submit">Create Account</button>

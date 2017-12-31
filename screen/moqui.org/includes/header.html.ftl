@@ -73,7 +73,15 @@
                                 </ul>
                             </li>
                             <li<#if menu_active! == "service"> class="active-item"</#if>><a href="/service.html">Service Providers</a></li>
-                            <li><a href="/vapps/hm">Issues &amp; Tasks</a></li>
+                            <li>
+                                <span class="sub-nav-toggle plus"></span>
+                                <a href="/vapps/my/User/Request">Issues &amp; Tasks</a>
+                                <ul>
+                                    <li><a href="/vapps/my">My Account</a></li>
+                                    <li><a href="/vapps/my/User/Request">My Requests (Issues)</a></li>
+                                    <li><a href="/vapps/hm">HiveMind PM</a></li>
+                                </ul>
+                            </li>
                             <li<#if menu_active! == "docs"> class="active-item"</#if>>
                                 <span class="sub-nav-toggle plus"></span>
                                 <a href="/docs">Documentation</a>
