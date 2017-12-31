@@ -30,4 +30,14 @@
     <moqui.resource.DbResource resourceId="apps_root" parentResourceId="WIKI_SPACE_ROOT" filename="apps.md" isFile="Y"/>
     <moqui.resource.DbResourceFile resourceId="apps_root" mimeType="text/plain" versionName="01" rootVersionName="01"
             fileData="# Moqui Applications"><histories versionName="01" versionDate="1485028800000" isDiff="N"/></moqui.resource.DbResourceFile>
+
+    <!-- Projects -->
+    <mantle.work.effort.WorkEffort workEffortId="MWEB" workEffortName="Moqui Web Site"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
+    <mantle.work.effort.WorkEffort workEffortId="MFW" workEffortName="Moqui Framework and Runtime"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
+    <mantle.work.effort.WorkEffort workEffortId="MBA" workEffortName="Mantle Business Artifacts"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
+    <mantle.work.effort.WorkEffort workEffortId="MAPP" workEffortName="Moqui Applications SS, POPC, HM"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
 </entity-facade-xml>
