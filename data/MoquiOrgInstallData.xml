@@ -36,8 +36,12 @@
             workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
     <mantle.work.effort.WorkEffort workEffortId="MFW" workEffortName="Moqui Framework and Runtime"
             workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
-    <mantle.work.effort.WorkEffort workEffortId="MBA" workEffortName="Mantle Business Artifacts"
+    <mantle.work.effort.WorkEffort workEffortId="MTC" workEffortName="Moqui Tool Components"
             workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
-    <mantle.work.effort.WorkEffort workEffortId="MAPP" workEffortName="Moqui Applications SS, POPC, HM"
+    <mantle.work.effort.WorkEffort workEffortId="MBA" workEffortName="Mantle Business Artifacts (UDM, USL)"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
+    <mantle.work.effort.WorkEffort workEffortId="MINT" workEffortName="Mantle Integrations"
+            workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
+    <mantle.work.effort.WorkEffort workEffortId="MAPP" workEffortName="Moqui Applications (POPC, HM, SS)"
             workEffortTypeEnumId="WetProject" statusId="WeInProgress" visibilityEnumId="WevGeneral"/>
 </entity-facade-xml>
