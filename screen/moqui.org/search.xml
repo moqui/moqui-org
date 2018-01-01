@@ -29,7 +29,7 @@ along with this software (see the LICENSE.md file). If not, see
         <link url="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax"
                 url-type="plain" link-type="anchor" target-window="_blank" text="Search String Reference"/>
         <render-mode><text type="html"><![CDATA[
-        <form name="SearchOptions" id="SearchOptions" method="post" action="http://localhost:8080/m/search">
+        <form name="SearchOptions" id="SearchOptions" method="post" action="/search">
             <input type="hidden" name="moquiFormName" value="SearchOptions">
             <input type="hidden" name="moquiSessionToken" value="${ec.web.sessionToken!}">
 
