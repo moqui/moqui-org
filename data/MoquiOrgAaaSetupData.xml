@@ -10,4 +10,21 @@
             artifactTypeEnumId="AT_XML_SCREEN" inheritAuthz="Y"/>
     <moqui.security.ArtifactAuthz artifactAuthzId="MOQ_ORG_ALL" userGroupId="ALL_USERS" artifactGroupId="MOQ_ORG"
             authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+
+    <!-- Search Links -->
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleWikiPage" linkSeqId="71" linkSet="moqui-org" label="Wiki Page" urlType="plain"
+            linkUrl="/docs/${wikiSpaceId}/${pagePath?:''}"/>
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleCommunicationEvent" linkSeqId="71" linkSet="moqui-org" label="View Message" urlType="plain"
+            linkUrl="/vapps/my/User/Messages/MessageThread?communicationEventId=${communicationEventId}"/>
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleEvent" linkSeqId="71" linkSet="moqui-org" label="View Event" urlType="plain"
+            linkUrl="/vapps/my/User/Calendar/EventDetail?workEffortId=${workEffortId}"/>
+
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleProject" linkSeqId="71" linkSet="moqui-org" label="Project Summary" urlType="plain"
+            linkUrl="/vapps/hm/Project/ProjectSummary?workEffortId=${workEffortId}"/>
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleTask" linkSeqId="71" linkSet="moqui-org" label="Task Summary" urlType="plain"
+            linkUrl="/vapps/hm/Task/TaskSummary?workEffortId=${workEffortId}"/>
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleRequest" linkSeqId="71" linkSet="moqui-org" label="View Request" urlType="plain"
+            linkUrl="/vapps/hm/Request/EditRequest?requestId=${requestId}"/>
+    <moqui.entity.document.DataDocumentLink dataDocumentId="MantleRequest" linkSeqId="72" linkSet="moqui-org" label="My Request" urlType="plain"
+            linkUrl="/vapps/my/User/Request/EditRequest?requestId=${requestId}"/>
 </entity-facade-xml>

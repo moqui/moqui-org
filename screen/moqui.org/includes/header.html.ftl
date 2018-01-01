@@ -35,6 +35,8 @@
     <script type="text/javascript" src="/js/shBrushGroovy.js"></script>
     <link href="/css/shCoreDefault.css" rel="stylesheet" type="text/css"/>
 
+    <script type="text/javascript" src="/libs/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/libs/jquery-validate/additional-methods.min.js"></script>
     <script type="text/javascript" src="/libs/jstree/jstree.min.js"></script>
     <link href="/libs/jstree/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -92,6 +94,7 @@
                                     <li><a href="/javadoc/index.html" target="_blank">API JavaDoc</a></li>
                                 </ul>
                             </li>
+                            <li<#if menu_active! == "search"> class="active-item"</#if>><a href="/search">Search</a></li>
                         </ul>
                     </div>
                 </nav>

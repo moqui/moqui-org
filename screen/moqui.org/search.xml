@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+        default-menu-include="false" menu-image="glyphicon glyphicon-search" menu-image-type="icon" require-authentication="anonymous-view">
+
+    <pre-actions><set field="menu_active" value="search"/></pre-actions>
+    <actions>
+        <if condition="queryString">
+            <!-- add wildcards to query string for partial words -->
+            <script>queryString = (queryString.split(' ') as List).collect({ it.matches(/\w*/) ? (it + '*') : it }).join(' ')</script>
+            <service-call name="org.moqui.search.SearchServices.search#DataDocuments" out-map="context"
+                    in-map="context + [indexName:'mantle', flattenDocument:false,
+                    documentType:'MantleCommunicationEvent,MantleWikiPage,MantleProject,MantleTask,MantleEvent,MantleRequest']"/>
+        </if>
+    </actions>
+    <widgets><container style="container">
+        <link url="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax"
+                url-type="plain" link-type="anchor" target-window="_blank" text="Search String Reference"/>
+        <render-mode><text type="html"><![CDATA[
+        <form name="SearchOptions" id="SearchOptions" method="post" action="http://localhost:8080/m/search">
+            <input type="hidden" name="moquiFormName" value="SearchOptions">
+            <input type="hidden" name="moquiSessionToken" value="${ec.web.sessionToken!}">
+
+            <div class="form-group">
+                <input id="SearchOptions_queryString" type="text" name="queryString" value="" size="60" class="form-control" data-toggle="tooltip"
+                    title="Matches whole words, use the asterisk (*) wildcard to match partial words; use field:term to search a specific field">
+                <button type="submit" name="submitButton" value="submitButton" id="SearchOptions_submitButton" class="btn btn-primary btn-sm">Search</button>
+            </div>
+        </form>
+        <script>
+            $('#SearchOptions [data-toggle="tooltip"]').tooltip({placement:'auto top'});
+            $("#SearchOptions").find('[name^="queryString"]').focus();
+        </script>
+        ]]></text></render-mode>
+        <form-list name="SearchResults" list="documentList" skip-form="true">
+            <row-actions>
+                <entity-find-one entity-name="moqui.entity.document.DataDocument" value-field="dataDocument" cache="true">
+                    <field-map field-name="dataDocumentId" from="_type"/></entity-find-one>
+                <set field="documentTitle" from="ec.resource.expand(dataDocument?.documentTitle, '')"/>
+
+                <entity-find entity-name="moqui.entity.document.DataDocumentLink" list="ddLinkList" cache="true">
+                    <econdition field-name="dataDocumentId" from="_type"/>
+                    <econdition field-name="linkSet" value="moqui-org"/>
+                </entity-find>
+                <set field="linksList" from="[]"/>
+                <iterate list="ddLinkList" entry="ddLink"><if condition="!ddLink.linkCondition || ec.resource.condition(ddLink.linkCondition, '')">
+                    <script>linksList.add(ddLink)</script></if></iterate>
+            </row-actions>
+            <field name="type"><default-field><display text="${dataDocument.documentName}"/></default-field></field>
+            <field name="id"><default-field><display text="${_id}"/></default-field></field>
+            <field name="documentTitle"><default-field title="Title"><display/></default-field></field>
+            <field name="link"><default-field>
+                <section-iterate name="LinksListSection" list="linksList" entry="ddLink"><widgets>
+                    <link url="${ec.resource.expand(ddLink.linkUrl, null)}" text="${ec.resource.expand(ddLink.label, null)}"
+                            link-type="anchor" url-type="${ddLink.urlType?:'plain'}"/>
+                </widgets></section-iterate>
+            </default-field></field>
+        </form-list>
+    </container></widgets>
+</screen>
