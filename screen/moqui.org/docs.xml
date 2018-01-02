@@ -40,7 +40,7 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="versionName" from="ver ?: publishedVersionName ?: currentVersionName"/>
         </if>
         <entity-find entity-name="moqui.resource.wiki.WikiSpace" list="wikiSpaceList">
-            <econdition field-name="restrictView" value="N" or-null="true"/></entity-find>
+            <econdition field-name="restrictView" value="N" or-null="true"/><order-by field-name="description"/></entity-find>
 
         <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
         <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
