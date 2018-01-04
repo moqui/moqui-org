@@ -50,8 +50,7 @@
                         <a href="https://demo.moqui.org">Try the demo!</a> See POP Commerce, HiveMind, System, Tools, etc
                     </p>
                     <p class="top-info__text pull-right small">
-                        Comments? <a href="http://www.linkedin.com/groups?gid=4640689">LinkedIn Group</a>
-                        Questions? <a href="http://stackoverflow.com/questions/tagged/moqui">Stack Overflow</a>
+                        Comments? Questions? Get Involved? <a href="/docs/moqui/Community+Guide">Community Guide</a>
                     </p>
                 </div>
             </div>
