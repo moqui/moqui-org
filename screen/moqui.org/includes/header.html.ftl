@@ -88,6 +88,7 @@
                                 <span class="sub-nav-toggle plus"></span>
                                 <a href="/docs">Documentation</a>
                                 <ul>
+                                    <li><a href="/docs/moqui">Moqui Ecosystem</a></li>
                                     <li><a href="/docs/framework">Moqui Framework</a></li>
                                     <li><a href="/docs/mantle">Mantle Business Artifacts</a></li>
                                     <li><a href="/docs/apps">Applications</a></li>
