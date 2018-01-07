@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- No copyright or license for configuration file, details here are not considered a creative work. -->
+<moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/moqui-conf-2.1.xsd">
+    <screen-facade>
+        <screen location="component://webroot/screen/webroot.xml" default-subscreen="m">
+            <subscreens-item name="m" menu-include="false" no-sub-path="true" location="component://moqui-org/screen/moqui.org.xml"/>
+        </screen>
+    </screen-facade>
+</moqui-conf>

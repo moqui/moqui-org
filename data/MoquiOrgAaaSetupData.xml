@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-facade-xml type="seed">
-    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot.xml"
-            subscreenName="m" menuInclude="N" makeDefault="Y" noSubPath="Y"
-            subscreenLocation="component://moqui-org/screen/moqui.org.xml"/>
+    <!-- NOTE: subscreen configuration is now in the MoquiConf.xml file instead of DB records
+    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot.xml" subscreenName="m" menuInclude="N"
+            makeDefault="Y" noSubPath="Y" subscreenLocation="component://moqui-org/screen/moqui.org.xml"/>
+    -->
 
     <!-- authz/permission for ALL users -->
     <moqui.security.ArtifactGroup artifactGroupId="MOQ_ORG" description="moqui.org app (via root screen)"/>
