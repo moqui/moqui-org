@@ -6,11 +6,12 @@ h3 { margin-top: 20px; }
 
 .presentation { height: 108px; background: #212c43; }
 .main-nav { height: 73px; background: #212c43; /* opacity: 0.95; filter: alpha(opacity=95); */ }
-.top-info { height: 35px; }
+.top-info { height: 35px; border-top: black solid 1px; }
 .logo { padding-top: 16px; }
 .logo-img { margin-bottom: 20px; }
 ul#navigation > li > a { padding: 23px 15px 21px; }
 ul#navigation a:hover, ul#navigation .active-item > a { color: #5ba5eb; }
+#navigation { padding-top: 5px; }
 
 @media (min-width: 768px) { ul#navigation > li:hover > ul { top: 70px; background: rgba(33, 44, 67, 0.9); } }
 #navigation-toggle { margin-top: 8px; }
@@ -21,6 +22,8 @@ ul#navigation a:hover, ul#navigation .active-item > a { color: #5ba5eb; }
   -moz-box-shadow: none;
   box-shadow: none;
 }
+.home-title-wrapper .page-title-secondary { text-shadow: none; }
+.home-title-wrapper .page-title-secondary span { display: inline-block; padding: 4px 12px 6px 12px; background: rgba(33, 44, 67, 0.1); border-radius: 8px; }
 /* use color instead of placeholder image for framework, mantle, etc */
 .services-title-wrapper { background-image: none; background-color: #437ac3; }
 .icon-circle--small { padding-top: 2px; }
@@ -31,9 +34,11 @@ ul#navigation a:hover, ul#navigation .active-item > a { color: #5ba5eb; }
 .divider-circle--light { margin-top: 29px; }
 
 /* better handle moqui logo image */
-.moqui-logo { margin-top: -5px; height: 40px; }
+.moqui-logo { margin-top: 0px; height: 40px; }
 @media (min-width: 768px) {
-  .main-nav.fixed-pos { top: 35px; }
+  .presentation { height: 35px; background: #212c43; }
+  .main-nav.fixed-pos { top: 0px; }
+  .top-info { margin-top: 73px; }
   .circle-info__title { font-size: 26px; }
   .circle-button__title { font-size: 26px; }
 }
@@ -91,3 +96,8 @@ nav.form-list-nav .pagination { margin: 6px 6px 0 6px; padding:0; border:0; }
 nav.form-list-nav>form.form-inline { display: inline-block; margin: 2px 6px 0 0; float: left; }
 nav.form-list-nav>.btn { display: inline-block; margin: 6px 6px 0 6px; float: left; }
 nav.form-list-nav>span.select2-container { float: left; margin: 6px 0 6px 0; min-width: 100px; max-width: 160px; }
+
+/* move id based anchor target up for fixed header */
+h1:target, h2:target, h3:target { display: inline-block; padding-top: 108px; margin-top: -60px; }
+/* fix default nowrap in jstree */
+.jstree-default .jstree-anchor { white-space: normal; height: auto; }

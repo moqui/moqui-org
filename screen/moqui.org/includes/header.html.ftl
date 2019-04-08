@@ -16,7 +16,6 @@
     <link href="/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="/libs/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/style_blue.css" rel="stylesheet">
-    <link href="/css/override.css" rel="stylesheet">
 
     <script src="/libs/jquery/jquery.min.js"></script>                <!--Script jQuery-->
     <script src="/external/jquery/jquery-migrate-1.2.1.min.js"></script>			<!--Script jQuery for old version jQuery-->
@@ -39,23 +38,14 @@
     <script type="text/javascript" src="/libs/jquery-validate/additional-methods.min.js"></script>
     <script type="text/javascript" src="/libs/jstree/jstree.min.js"></script>
     <link href="/libs/jstree/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/css/override.css" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper">
     <header>
         <div class="presentation">
-            <div class="top-info">
-                <div class="container">
-                    <p class="top-info__text pull-left hidden-xs small">
-                        <a href="https://demo.moqui.org">Try the demo!</a> See POP Commerce, HiveMind, System, Tools, etc
-                    </p>
-                    <p class="top-info__text pull-right small">
-                        Comments? Questions? Get Involved? <a href="/docs/moqui/Community+Guide">Community Guide</a>
-                    </p>
-                </div>
-            </div>
             <div class="main-nav fixed-pos">
-                <div class="divider-circle"></div>
                 <nav class="container">
                     <div class="logo pull-left">
                         <a href="/index.html"><img class="logo-img moqui-logo" src="/MoquiLogoNew.png" alt="Moqui Logo"></a>
@@ -98,6 +88,17 @@
                         </ul>
                     </div>
                 </nav>
+                <#-- <div class="divider-circle"></div> -->
+            </div>
+            <div class="top-info">
+                <div class="container">
+                    <p class="top-info__text pull-left hidden-xs small">
+                        <a href="https://demo.moqui.org">Try the demo!</a> See POP Commerce, HiveMind, System, Tools, etc
+                    </p>
+                    <p class="top-info__text pull-right small">
+                        Comments? Questions? Get Involved? <a href="/docs/moqui/Community+Guide">Community Guide</a>
+                    </p>
+                </div>
             </div>
         </div>
     </header>
