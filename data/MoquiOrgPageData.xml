@@ -404,9 +404,9 @@ The screen is available at the same URL, but now includes the content from the H
 
 h3. Try Sub-Content
 
-Another way to show the contents fo the {{hello.html}} file is to treat it as screen sub-content.
+Another way to show the contents of the {{hello.html}} file is to treat it as screen sub-content.
 
-To do this the {{hello.html}} file must by in a sub-directory with the same name as the screen, ie in a {{tutorial}} directory as a sibling of the {{tutorial.xml}} file.
+To do this the {{hello.html}} file must be in a sub-directory with the same name as the screen, i.e. in a {{tutorial}} directory as a sibling of the {{tutorial.xml}} file.
 
 Now all we have to do is:
 
