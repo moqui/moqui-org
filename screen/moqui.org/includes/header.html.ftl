@@ -93,10 +93,11 @@
             <div class="top-info">
                 <div class="container">
                     <p class="top-info__text pull-left hidden-xs small">
-                        <a href="https://demo.moqui.org">Try the demo!</a> See POP Commerce, HiveMind, System, Tools, etc
+                        <a href="https://demo.moqui.org/vapps" target="_blank">Try the applications demo!</a>
+                        <a href="https://demo.moqui.org/store" target="_blank">Try POP Shop eCommerce!</a>
                     </p>
                     <p class="top-info__text pull-right small">
-                        Comments? Questions? Get Involved? <a href="/docs/moqui/Community+Guide">Community Guide</a>
+                        Comments? Questions? Get Involved? <a href="/docs/moqui/Community+Guide" target="_blank">Community Guide</a>
                     </p>
                 </div>
             </div>

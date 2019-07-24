@@ -92,6 +92,9 @@ along with this software (see the LICENSE.md file). If not, see
                     </actions></tree-sub-node>
                 </tree>
             </widgets></section>
+
+            <label text="&amp;nbsp;" type="p" encode="false"/>
+            <link url="../alldocs/${wikiSpaceId?:''}" text="All Pages" link-type="anchor"/>
         </row-col><row-col md="9">
             <section name="PageTextSection" condition="pageReference != null &amp;&amp; pageReference.exists &amp;&amp; publishedVersionName">
                 <widgets>

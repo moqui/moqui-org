@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a 
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+        allow-extra-path="true" default-menu-include="false" require-authentication="anonymous-view">
+
+    <pre-actions>
+        <set field="head_title" value="Moqui Documentation"/>
+        <set field="menu_active" value="docs"/>
+    </pre-actions>
+    
+    <actions>
+        <set field="extraPathNameList" from="new ArrayList(sri.screenUrlInfo.extraPathNameList)"/>
+        <set field="wikiSpaceId" from="extraPathNameList ? extraPathNameList.get(0) : null"/>
+        <entity-find-one entity-name="moqui.resource.wiki.WikiSpace" value-field="wikiSpace"/>
+        <if condition="wikiSpace?.restrictView == 'Y'"><set field="wikiSpace" from="null"/></if>
+
+        <if condition="wikiSpace != null">
+            <service-call name="org.moqui.impl.WikiServices.get#WikiPageInfo" in-map="context" out-map="context"/>
+            <set field="versionName" from="ver ?: publishedVersionName ?: currentVersionName"/>
+        </if>
+        <entity-find entity-name="moqui.resource.wiki.WikiSpace" list="wikiSpaceList">
+            <econdition field-name="restrictView" value="N" or-null="true"/><order-by field-name="description"/></entity-find>
+
+        <set field="basePath" from="sri.getCurrentScreenUrl().getScreenOnlyPath()"/>
+        <set field="baseLinkUrl" from="sri.getCurrentScreenUrl().getScreenPathUrl() + '/' + wikiSpaceId"/>
+    </actions>
+
+    <widgets><container style="container basic_html">
+        <container-row><row-col sm="5">
+            <!-- if not at least one path segment for the space show list of spaces -->
+            <label text="Wiki Spaces" type="h5"/>
+            <section-iterate name="WikiSpaceList" list="wikiSpaceList" entry="wikiSpace" condition="wikiSpaceList"><widgets>
+                <container><link text="${wikiSpace.description}" url="${basePath}/${wikiSpace.wikiSpaceId}" link-type="anchor"
+                        icon="glyphicon glyphicon-${wikiSpaceId == wikiSpace.wikiSpaceId ? 'chevron-right' : 'minus'}"
+                        style="${wikiSpaceId == wikiSpace.wikiSpaceId ? 'text-success' : ''}"/></container>
+            </widgets></section-iterate>
+
+        </row-col><row-col sm="7">
+            <label text="Select a Wiki Space" type="h4" style="text-center" condition="wikiSpace == null"/>
+
+            <section name="MainViewSection" condition="wikiSpace != null"><actions>
+                <service-call name="org.moqui.impl.WikiServices.get#WikiSpacePages" out-map="context"
+                        in-map="[wikiSpaceId:wikiSpaceId]"/>
+            </actions><widgets>
+                <label text="Page List" type="h5"/>
+                <link text="${wikiSpace?.description?:'Space Root'}" url="/m/docs/${wikiSpaceId}" link-type="anchor" url-noparam="true"/>
+                <section-iterate name="PageListSection" list="allChildFileFlatList" entry="fileInfo"><widgets>
+                    <container><link url="/m/docs/${wikiSpaceId}/${fileInfo.path}" text="${fileInfo.path.replaceAll('/',' / ')}" link-type="anchor"/></container>
+                </widgets></section-iterate>
+            </widgets></section>
+        </row-col></container-row>
+    </container></widgets>
+</screen>
