@@ -97,6 +97,17 @@ along with this software (see the LICENSE.md file). If not, see
                 Most screens don't need this, but it is useful for greater data consistency in certain cases.
             </xs:documentation></xs:annotation>
         </xs:attribute>
+        <xs:attribute name="transaction-timeout" type="xs:int">
+            <xs:annotation><xs:documentation>
+                The timeout for the screen render transaction, in seconds. Defaults to global transaction timeout default (usually 60s).
+
+                This value is only used if a screen in the rendered screen path begins a transaction. If multiple screens in the
+                render path have a timeout the highest will be used.
+
+                This is not intended for interactive screen rendering as the HTTP request or gateway will generally timeout first
+                anyway but is useful for background rendered screens for large reports and such.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
         <xs:attribute name="include-child-content" type="boolean" default="false">
             <xs:annotation><xs:documentation>
                 False by default, meaning that child content is sent to the client as they are and nothing else with
@@ -120,13 +131,20 @@ along with this software (see the LICENSE.md file). If not, see
                 Default is false and an exception will be thrown if there is extra path that does not match a
                 subscreen, a transition, or content below the screen.</xs:documentation></xs:annotation>
         </xs:attribute>
+        <xs:attribute name="render-modes" type="xs:string" default="all">
+            <xs:annotation><xs:documentation>
+                The render mode(s) this screen supports. Can be any valid render mode. The default value of "all" will allow all
+                render modes, so specify one or more specific render modes to limit how the screen may be rendered. Default supported
+                modes include: text, html, js, vuet, xsl-fo, xml, and csv. Values can be comma separated to apply to multiple render modes.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
         <xs:attribute name="server-static" type="xs:string">
             <xs:annotation><xs:documentation>
                 The render modes where the results of this screen are always the same and the screen render results may be cached (on server and/or client).
                 This applies to all screens that are designed for client rendering when the screen is written to fully support it (filling in data with additional requests).
                 Placeholder screens are automatically server static, ie with just subscreens-panel, subscreens-active, and subscreens-menu elements.
-                Can be any valid render mode. Default supported modes include: text, html, vuet, xsl-fo, xml, and csv.
-                Values can be comma separated to apply to multiple render modes. A value of "any" will apply to all render modes.
+                Can be any valid render mode. Default supported modes include: text, html, js, vuet, xsl-fo, xml, and csv.
+                Values can be comma separated to apply to multiple render modes. A value of "all" will apply to all render modes.
             </xs:documentation></xs:annotation>
         </xs:attribute>
     </xs:complexType></xs:element>
@@ -192,25 +210,26 @@ along with this software (see the LICENSE.md file). If not, see
                     transition is available (otherwise the button/link/etc is disabled).
                 </xs:documentation></xs:annotation>
             </xs:element>
-            <xs:choice minOccurs="0">
-                <xs:element ref="service-call">
-                    <xs:annotation><xs:documentation>
-                        In most cases the best way to handle input for a transition is with a single service. To do
-                        that use this element instead of an actions element.
+            <xs:element ref="service-call" minOccurs="0">
+                <xs:annotation><xs:documentation>
+                    In most cases the best way to handle input for a transition is with a single service. To do
+                    that use this element instead of an actions element.
 
-                        This will automatically have an in-map=true. To get the same effect inside the actions
-                        element just use in-map=true.
-                    </xs:documentation></xs:annotation>
-                </xs:element>
-                <xs:element ref="actions">
-                    <xs:annotation><xs:documentation>
-                        When this transition is followed these actions are run.
+                    If an actions element is also specified the actions will be run after the service-call.
 
-                        After the actions are run it goes to the url that this transition goes to (through
-                        client-side redirect, dynamic update of a screen area, etc).
-                    </xs:documentation></xs:annotation>
-                </xs:element>
-            </xs:choice>
+                    This will automatically have an in-map=true. To get the same effect inside the actions
+                    element just use in-map=true.
+                </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element ref="actions" minOccurs="0">
+                <xs:annotation><xs:documentation>
+                    When this transition is followed these actions are run.
+                    If a service-call element is also used that will be run before these actions.
+
+                    After the actions are run it goes to the url that this transition goes to (through
+                    client-side redirect, dynamic update of a screen area, etc).
+                </xs:documentation></xs:annotation>
+            </xs:element>
             <xs:element ref="conditional-response" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation><xs:documentation>
                     If there are multiple transition-response sub-elements the first one whose condition evaluates
@@ -400,17 +419,20 @@ along with this software (see the LICENSE.md file). If not, see
             If there is no additional element in the screen path or the next element is not a valid subscreen-item.name
             then the default-item will be the active subscreen. 
 
-            There are three ways to add subscreens to a screen:
+            There are four ways to add subscreens to a screen (in order of override):
 
-            1. for screens within a single application:
-               by directory structure: create a directory in the directory where the parent screen is named the same as
-               the parent screen's filename and put XML Screen files in that directory (name=filename up to .xml,
-               title=screen.default-title, location=parent screen minus filename plus directory and filename for
-               subscreen)
+            1. for screens within a single application by directory structure:
+                create a directory in the directory where the parent screen is named the same as
+                the parent screen's filename and put XML Screen files in that directory (name=filename up to .xml,
+                title=screen.default-title, location=parent screen minus filename plus directory and filename for
+                subscreen)
             2. for including screens that are part of another application, or shared and not in any application:
-               subscreens-item elements below the screen -> subscreens element (this element)
-            3. for adding screens, removing screens, or changing order and title of screens to an existing application:
-               a record in the moqui.screen.SubscreensItem entity
+                subscreens-item elements below the screen.subscreens element (this element)
+            3. for adding screens or changing order and title of screens to an existing application:
+                screen-facade.screen and subscreens-item elements in the Moqui Conf XML file including MoquiConf.xml in
+                a component; this subscreens-item element is much like the subscreens.subscreens-item element
+            4. for adding screens, removing screens, or changing order and title of screens to an existing application:
+                a record in the moqui.screen.SubscreensItem entity
 
             There are two visual elements (widgets) that come from the subscreens, a menu and the active subscreen.
             Those are included with the widgets using the "subscreens-menu" and "subscreens-active" elements, or the
@@ -698,6 +720,8 @@ along with this software (see the LICENSE.md file). If not, see
         <xs:group ref="widget-elements" minOccurs="0" maxOccurs="unbounded"/>
         <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="button-text" type="xs:string" use="required"/>
+        <xs:attribute name="button-style" type="xs:string"/>
+        <xs:attribute name="title" type="xs:string"/>
         <xs:attribute name="width" type="xs:string" default="760"/>
         <xs:attribute name="height" type="xs:string" default="600"/>
         <xs:attribute name="condition" type="xs:string"/>

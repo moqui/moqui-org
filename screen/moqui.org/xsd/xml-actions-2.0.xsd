@@ -13,7 +13,7 @@ along with this software (see the LICENSE.md file). If not, see
 <http://creativecommons.org/publicdomain/zero/1.0/>.
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:include schemaLocation="common-types-2.1.xsd"/>
+    <xs:include schemaLocation="common-types-2.0.xsd"/>
 
     <xs:element name="CallOperations" abstract="true"/>
     <xs:element name="EnvOperations" abstract="true"/>
@@ -139,7 +139,6 @@ along with this software (see the LICENSE.md file). If not, see
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    <!-- tabled, adds little value, not likely to be implemented:
     <xs:element name="service-group" substitutionGroup="CallOperations">
         <xs:complexType>
             <xs:sequence>
@@ -180,7 +179,6 @@ along with this software (see the LICENSE.md file). If not, see
             <xs:attribute name="result-to-context" default="false" type="boolean"/>
         </xs:complexType>
     </xs:element>
-    -->
 
     <xs:element name="script" substitutionGroup="CallOperations">
         <xs:annotation><xs:documentation>
@@ -270,10 +268,6 @@ along with this software (see the LICENSE.md file). If not, see
             <xs:attribute name="ignore-if-empty" type="boolean" default="false">
                 <xs:annotation><xs:documentation>Leave out the constraint if valid-date is empty or null. Defaults to false.</xs:documentation></xs:annotation>
             </xs:attribute>
-            <xs:attribute name="ignore" type="xs:string" default="false">
-                <xs:annotation><xs:documentation>Ignore the econdition (leave out of the find) if set to true or expression evaluates to true.
-                    Defaults to false.</xs:documentation></xs:annotation>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
@@ -342,9 +336,6 @@ along with this software (see the LICENSE.md file). If not, see
                     entity definition.
                 </xs:documentation></xs:annotation>
             </xs:attribute>
-            <xs:attribute name="use-clone" default="false" type="boolean">
-                <xs:annotation><xs:documentation>Use a datasource clone, if one is configured</xs:documentation></xs:annotation>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
     <xs:element name="entity-find" substitutionGroup="EntityFindOperations">
@@ -397,9 +388,6 @@ along with this software (see the LICENSE.md file). If not, see
                 <xs:annotation><xs:documentation>Get only distinct results, based on the combination of all fields
                     selected. Defaults to false.</xs:documentation></xs:annotation>
             </xs:attribute>
-            <xs:attribute name="use-clone" default="false" type="boolean">
-                <xs:annotation><xs:documentation>Use a datasource clone, if one is configured</xs:documentation></xs:annotation>
-            </xs:attribute>
             <xs:attribute name="offset" type="xs:string">
                 <xs:annotation><xs:documentation>Get back results starting at this offset.</xs:documentation></xs:annotation>
             </xs:attribute>
@@ -439,9 +427,6 @@ along with this software (see the LICENSE.md file). If not, see
                 <xs:annotation><xs:documentation>Indicate if this find should set pagination options even if there are
                     no pageSize and pageIndex parameters. Also adds a context field called "${entity-find.@list}Count"
                     with a count of the total possible results (ie without the offset/limit). Defaults to true.</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="require-parameters" default="false" type="boolean">
-                <xs:annotation><xs:documentation>If true only do find if there is at least one parameter</xs:documentation></xs:annotation>
             </xs:attribute>
         </xs:complexType>
     </xs:element>
@@ -538,7 +523,7 @@ along with this software (see the LICENSE.md file). If not, see
                 <xs:annotation><xs:documentation>If true make a condition specified value or null as valid matches.</xs:documentation></xs:annotation>
             </xs:attribute>
             <xs:attribute name="ignore" type="xs:string" default="false">
-                <xs:annotation><xs:documentation>Ignore the econdition (leave out of the find) if set to true or expression evaluates to true.
+                <xs:annotation><xs:documentation>Ignore the econdition (leave out of the find) if set to true.
                     Defaults to false.</xs:documentation></xs:annotation>
             </xs:attribute>
         </xs:complexType>
@@ -894,10 +879,6 @@ along with this software (see the LICENSE.md file). If not, see
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:string">
-                    <xs:attribute name="type" type="message-type" default="info"/>
-                    <xs:attribute name="public" type="boolean" default="false">
-                        <xs:annotation><xs:documentation>If true make it a public message, not compatible with error (overrides this)</xs:documentation></xs:annotation>
-                    </xs:attribute>
                     <xs:attribute name="error" type="boolean" default="false">
                         <xs:annotation><xs:documentation>If true will be considered caused by an error, meaning
                             transaction will be rolled back, etc.</xs:documentation></xs:annotation>
@@ -915,11 +896,7 @@ along with this software (see the LICENSE.md file). If not, see
         <xs:complexType>
             <xs:attribute name="message" type="xs:string">
                 <xs:annotation><xs:documentation>Adds a message to the errors list (ec.message.errors) if error=true,
-                    or the messages list (ec.message.messages) otherwise.</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="type" type="message-type" default="info"/>
-            <xs:attribute name="public" type="boolean" default="false">
-                <xs:annotation><xs:documentation>If true make it a public message, not compatible with error (overrides this)</xs:documentation></xs:annotation>
+                    the messages list (ec.message.messages) otherwise.</xs:documentation></xs:annotation>
             </xs:attribute>
             <xs:attribute name="error" type="boolean" default="false">
                 <xs:annotation><xs:documentation>If true will be considered caused by an error, meaning transaction
