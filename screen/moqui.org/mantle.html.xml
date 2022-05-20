@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         require-authentication="false">
     <pre-actions>
         <set field="head_keywords" value="moqui,mantle,ubpl,udm,usl,universal,service,service library,data model,free,open source,ecommerce,erp,psa,crm,scm,eam,mrp,pos,integration,edi,payment,authorize.net"/>
