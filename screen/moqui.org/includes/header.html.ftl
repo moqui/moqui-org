@@ -93,7 +93,7 @@
             <div class="top-info">
                 <div class="container">
                     <p class="top-info__text pull-left hidden-xs small">
-                        <a href="https://demo.moqui.org/vapps" target="_blank">Try the applications demo!</a>
+                        <a href="https://demo.moqui.org/qapps" target="_blank">Try the applications demo!</a>
                         <a href="https://demo.moqui.org/store" target="_blank">Try POP Shop eCommerce!</a>
                     </p>
                     <p class="top-info__text pull-right small">
