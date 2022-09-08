@@ -22,7 +22,7 @@
 <html>
 <head>
 
-<title>org.moqui.context (framework 2.0.0 API)</title>
+<title>org.moqui.context (framework 3.0.0 API)</title>
 <meta name="keywords" content="org.moqui.context package">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" title="Style">
@@ -31,7 +31,7 @@
 <script type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="org.moqui.context (framework 2.0.0 API)";
+    parent.document.title="org.moqui.context (framework 3.0.0 API)";
 }
 </script>
 <noscript>
@@ -112,6 +112,22 @@ function windowTitle()
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
+                                <strong><a href="ElasticFacade.html" title="class in org/moqui/context">
+                                    ElasticFacade
+                                </a></strong>
+                            </td>
+                            <td>A facade for ElasticSearch operations.</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="ElasticFacade.ElasticClient.html" title="class in org/moqui/context">
+                                    ElasticFacade.ElasticClient
+                                </a></strong>
+                            </td>
+                            <td></td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
                                 <strong><a href="ExecutionContext.html" title="class in org/moqui/context">
                                     ExecutionContext
                                 </a></strong>
@@ -134,6 +150,15 @@ function windowTitle()
                                 </a></strong>
                             </td>
                             <td>For localization (l10n) functionality, like localizing messages.</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="LogEventSubscriber.html" title="class in org/moqui/context">
+                                    LogEventSubscriber
+                                </a></strong>
+                            </td>
+                            <td>A simple interface for a method to receive LogEvent instances.
+ </td>
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
@@ -193,6 +218,15 @@ function windowTitle()
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
+                                <strong><a href="ToolFactory.html" title="class in org/moqui/context">
+                                    ToolFactory
+                                </a></strong>
+                            </td>
+                            <td>Implement this interface to manage lifecycle and factory for tools initialized and destroyed with Moqui Framework.
+ </td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
                                 <strong><a href="TransactionFacade.html" title="class in org/moqui/context">
                                     TransactionFacade
                                 </a></strong>
@@ -234,6 +268,40 @@ function windowTitle()
 
 
 
+    <div class="summary">
+        <ul class="blockList">
+            <li class="blockList">
+                <table border="0" cellpadding="3" cellspacing="0" summary="Class Summary">
+                    <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+                    <tbody>
+                    <tr>
+                        <th class="colFirst" scope="col">Class</th>
+                        <th class="colLast" scope="col">Description</th>
+                    </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="MessageFacade.MessageInfo.html" title="class in org/moqui/context">
+                                    MessageFacade.MessageInfo
+                                </a></strong>
+                            </td>
+                            <td></td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="MoquiLog4jAppender.html" title="class in org/moqui/context">
+                                    MoquiLog4jAppender
+                                </a></strong>
+                            </td>
+                            <td></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </li>
+            </ul>
+        </div>
+    
+
 
     <div class="summary">
         <ul class="blockList">
@@ -259,7 +327,7 @@ function windowTitle()
                                     ArtifactExecutionInfo.AuthzAction
                                 </a></strong>
                             </td>
-                            <td>Information about execution of an artifact as the system is running</td>
+                            <td></td>
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
@@ -267,7 +335,7 @@ function windowTitle()
                                     ArtifactExecutionInfo.AuthzType
                                 </a></strong>
                             </td>
-                            <td>Information about execution of an artifact as the system is running</td>
+                            <td></td>
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
@@ -330,11 +398,43 @@ function windowTitle()
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
+                                <strong><a href="PasswordChangeRequiredException.html" title="class in org/moqui/context">
+                                    PasswordChangeRequiredException
+                                </a></strong>
+                            </td>
+                            <td>Thrown when user's password is correct but account requires second factor authentication.</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="SecondFactorRequiredException.html" title="class in org/moqui/context">
+                                    SecondFactorRequiredException
+                                </a></strong>
+                            </td>
+                            <td>Thrown when user's password is correct but account requires second factor authentication.</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
                                 <strong><a href="TransactionException.html" title="class in org/moqui/context">
                                     TransactionException
                                 </a></strong>
                             </td>
                             <td>TransactionException</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="ValidationError.html" title="class in org/moqui/context">
+                                    ValidationError
+                                </a></strong>
+                            </td>
+                            <td>ValidationError - used to track information about validation errors.</td>
+                        </tr>
+<tr class="altColor">
+                            <td class="colOne">
+                                <strong><a href="WebMediaTypeException.html" title="class in org/moqui/context">
+                                    WebMediaTypeException
+                                </a></strong>
+                            </td>
+                            <td></td>
                         </tr>
 
                     </tbody>
