@@ -48,7 +48,7 @@ services:
       - "JAVA_TOOL_OPTIONS=-Xms1024m -Xmx1024m"
       - instance_purpose=production
       # this can be a comma separate list of hosts like 'example.com,www.example.com'
-      - VIRTUAL_HOST=demo.moqui.org
+      - VIRTUAL_HOST=demo.moqui.org,demo.moqui.local
       # moqui will accept traffic from other hosts but these are the values used for URL writing when specified:
       - webapp_http_host=demo.moqui.org
       - webapp_http_port=80
@@ -95,7 +95,7 @@ services:
      - elasticsearch_password=admin
      # CHANGE ME - note that VIRTUAL_HOST is for nginx-proxy so it picks up this container as one it should reverse proxy
      # this can be a comma separate list of hosts like 'example.com,www.example.com'
-     - VIRTUAL_HOST=moqui.org,www.moqui.org
+     - VIRTUAL_HOST=moqui.org,www.moqui.org,beta.moqui.org,www.moqui.local
      # moqui will accept traffic from other hosts but these are the values used for URL writing when specified:
      # - webapp_http_host=moqui.local
      - webapp_http_port=80
