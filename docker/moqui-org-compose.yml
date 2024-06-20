@@ -27,10 +27,11 @@ services:
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       # note: .crt, .key, and .dhparam.pem files start with the domain name in VIRTUAL_HOST (ie 'moqui.local.*') or use CERT_NAME env var
-      # - ./certs:/etc/nginx/certs
+      - ./certs:/etc/nginx/certs
       - ./nginx/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
     environment:
       # change this for the default host to use when accessing directly by IP, etc
