@@ -26,8 +26,8 @@ services:
     container_name: nginx-proxy
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       # note: .crt, .key, and .dhparam.pem files start with the domain name in VIRTUAL_HOST (ie 'moqui.local.*') or use CERT_NAME env var
@@ -38,6 +38,26 @@ services:
       - DEFAULT_HOST=moqui.org
       # use SSL_POLICY to disable TLSv1.0, etc in nginx-proxy
       # - SSL_POLICY=AWS-TLS-1-1-2017-01
+    networks:
+      - nginx-proxy
+
+# If you're want to use automated SSL certificates
+#  acme-companion:
+#    image: nginxproxy/acme-companion
+#    container_name: acme-companion
+#    environment:
+#      - DEFAULT_EMAIL=example@changeme.com
+#      - ACME_CA_URI=https://acme.zerossl.com/v2/DV90
+#      - RENEW_PRIVATE_KEYS=false
+#      - CERTS_UPDATE_INTERVAL=5
+#    volumes_from:
+#      - nginx-proxy
+#    volumes:
+#      - ./certs:/etc/nginx/certs:rw
+#      - ./acme:/etc/acme.sh
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#    networks:
+#      - nginx-proxy
 
   # --- DEMO ---
   moqui-demo:
@@ -59,6 +79,8 @@ services:
       - webapp_client_ip_header=CF-Connecting-IP
       - default_locale=en_US
       - default_time_zone=US/Pacific
+    networks:
+      - nginx-proxy
 
   # --- ORG ---
   moqui-org:
@@ -106,6 +128,8 @@ services:
      - webapp_client_ip_header=CF-Connecting-IP
      - default_locale=en_US
      - default_time_zone=US/Pacific
+    networks:
+      - nginx-proxy
 
   moqui-database:
     image: postgres:14.5
@@ -123,6 +147,8 @@ services:
      - POSTGRES_USER=moqui
      - POSTGRES_PASSWORD=moqui
      # PGDATA, POSTGRES_INITDB_ARGS
+    networks:
+      - nginx-proxy
 
   moqui-search:
     image: opensearchproject/opensearch:2.4.0
@@ -148,6 +174,8 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+    networks:
+      - nginx-proxy
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.4.0
@@ -160,3 +188,11 @@ services:
       - 127.0.0.1:5601:5601
     environment:
       OPENSEARCH_HOSTS: '["https://moqui-search:9200"]'
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    name: nginx-proxy
+    driver: bridge
+    attachable: true
